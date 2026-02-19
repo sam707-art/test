@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تسجيل الدخول - BLOOD HUNT</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #000000 0%, #333333 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .login-container {
+            background-color: #ffffff;
+            border: 3px solid #000000;
+            border-radius: 10px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+            max-width: 450px;
+            width: 100%;
+            padding: 40px;
+        }
+
+        .logo {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .logo h1 {
+            font-size: 36px;
+            font-weight: bold;
+            letter-spacing: 3px;
+            color: #000000;
+            margin-bottom: 10px;
+        }
+
+        .logo p {
+            color: #666666;
+            font-size: 14px;
+        }
+
+        .form-title {
+            text-align: center;
+            font-size: 24px;
+            margin-bottom: 30px;
+            color: #000000;
+            font-weight: bold;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #000000;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #000000;
+            background-color: #ffffff;
+            color: #000000;
+            font-size: 16px;
+            transition: all 0.3s;
+            outline: none;
+        }
+
+        .form-group input:focus {
+            border-color: #000000;
+            box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-group input::placeholder {
+            color: #999999;
+        }
+
+        .remember-forgot {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            font-size: 14px;
+        }
+
+        .remember-me {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+        }
+
+        .remember-me input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+        }
+
+        .forgot-password {
+            color: #000000;
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s;
+        }
+
+        .forgot-password:hover {
+            color: #666666;
+        }
+
+        .login-btn {
+            width: 100%;
+            padding: 15px;
+            background-color: #000000;
+            color: #ffffff;
+            border: 2px solid #000000;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .login-btn:hover {
+            background-color: #ffffff;
+            color: #000000;
+        }
+
+        .divider {
+            text-align: center;
+            margin: 30px 0;
+            position: relative;
+        }
+
+        .divider::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background-color: #cccccc;
+        }
+
+        .divider span {
+            background-color: #ffffff;
+            padding: 0 15px;
+            position: relative;
+            color: #666666;
+            font-size: 14px;
+        }
+
+        .social-login {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .social-btn {
+            flex: 1;
+            padding: 12px;
+            border: 2px solid #000000;
+            background-color: #ffffff;
+            color: #000000;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .social-btn:hover {
+            background-color: #000000;
+            color: #ffffff;
+        }
+
+        .signup-link {
+            text-align: center;
+            margin-top: 25px;
+            color: #666666;
+            font-size: 14px;
+        }
+
+        .signup-link a {
+            color: #000000;
+            text-decoration: none;
+            font-weight: bold;
+            transition: color 0.3s;
+        }
+
+        .signup-link a:hover {
+            color: #666666;
+        }
+
+        .back-home {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .back-home a {
+            color: #000000;
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .back-home a:hover {
+            color: #666666;
+        }
+
+        .error-message {
+            background-color: #ffebee;
+            color: #c62828;
+            padding: 12px;
+            border: 1px solid #c62828;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            display: none;
+            font-size: 14px;
+        }
+
+        .success-message {
+            background-color: #e8f5e9;
+            color: #2e7d32;
+            padding: 12px;
+            border: 1px solid #2e7d32;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            display: none;
+            font-size: 14px;
+        }
+
+        @media (max-width: 480px) {
+            .login-container {
+                padding: 30px 20px;
+            }
+
+            .logo h1 {
+                font-size: 28px;
+            }
+
+            .form-title {
+                font-size: 20px;
+            }
+
+            .social-login {
+                flex-direction: column;
+            }
+        }
+
+        /* Loading animation */
+        .loading {
+            display: none;
+            text-align: center;
+            margin-top: 10px;
+        }
+
+        .loading::after {
+            content: '';
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid #cccccc;
+            border-top-color: #000000;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <div class="logo">
+            <h1>BLOOD HUNT</h1>
+        </div>
+
+        <h2 class="form-title">تسجيل الدخول</h2>
+
+        <div class="error-message" id="errorMessage"></div>
+        <div class="success-message" id="successMessage"></div>
+
+        <form id="loginForm">
+            <div class="form-group">
+                <label for="email">البريد الإلكتروني</label>
+                <input 
+                    type="email" 
+                    id="email" 
+                    name="email" 
+                    placeholder="example@email.com" 
+                    required
+                >
+            </div>
+
+            <div class="form-group">
+                <label for="password">كلمة المرور</label>
+                <input 
+                    type="password" 
+                    id="password" 
+                    name="password" 
+                    placeholder="••••••••" 
+                    required
+                >
+            </div>
+
+            <div class="remember-forgot">
+                <label class="remember-me">
+                    <input type="checkbox" id="remember" name="remember">
+                    <span>تذكرني</span>
+                </label>
+                <a href="#" class="forgot-password" id="forgotPassword">نسيت كلمة المرور؟</a>
+            </div>
+
+            <button type="submit" class="login-btn">تسجيل الدخول</button>
+            <div class="loading" id="loading"></div>
+        </form>
+
+        <div class="divider">
+            <span>أو تسجيل الدخول بواسطة</span>
+        </div>
+
+        <div class="social-login">
+            <button class="social-btn" id="googleLogin">
+                <span>🔍</span>
+                Google
+            </button>
+            <button class="social-btn" id="facebookLogin">
+                <span>📘</span>
+                Facebook
+            </button>
+        </div>
+
+        <div class="signup-link">
+            ليس لديك حساب؟ <a href="register.html">سجل الآن</a>
+        </div>
+
+        <div class="back-home">
+            <a href="blood-hent-store.html">
+                ← العودة للمتجر
+            </a>
+        </div>
+    </div>
+
+    <script>
+        const loginForm = document.getElementById('loginForm');
+        const errorMessage = document.getElementById('errorMessage');
+        const successMessage = document.getElementById('successMessage');
+        const loading = document.getElementById('loading');
+        const forgotPasswordLink = document.getElementById('forgotPassword');
+        const googleLoginBtn = document.getElementById('googleLogin');
+        const facebookLoginBtn = document.getElementById('facebookLogin');
+
+        // Handle form submission
+        loginForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const remember = document.getElementById('remember').checked;
+
+            // Hide previous messages
+            errorMessage.style.display = 'none';
+            successMessage.style.display = 'none';
+
+            // Validate inputs
+            if (!email || !password) {
+                showError('يرجى ملء جميع الحقول');
+                if (typeof bloodHuntLogger !== 'undefined') {
+                    bloodHuntLogger.logLoginAttempt(email || 'N/A', 'حقول فارغة');
+                }
+                return;
+            }
+
+            if (!isValidEmail(email)) {
+                showError('يرجى إدخال بريد إلكتروني صحيح');
+                if (typeof bloodHuntLogger !== 'undefined') {
+                    bloodHuntLogger.logLoginAttempt(email, 'بريد إلكتروني غير صحيح');
+                }
+                return;
+            }
+
+            if (password.length < 6) {
+                showError('كلمة المرور يجب أن تكون 6 أحرف على الأقل');
+                if (typeof bloodHuntLogger !== 'undefined') {
+                    bloodHuntLogger.logLoginAttempt(email, 'كلمة مرور قصيرة');
+                }
+                return;
+            }
+
+            // Show loading
+            loading.style.display = 'block';
+
+            // Simulate login process (replace with actual API call)
+            setTimeout(() => {
+                loading.style.display = 'none';
+                
+                // تسجيل الدخول الناجح
+                if (typeof bloodHuntLogger !== 'undefined') {
+                    bloodHuntLogger.logLogin(email, 'email');
+                }
+                
+                // Simulate successful login
+                showSuccess('تم تسجيل الدخول بنجاح! جاري التحويل...');
+                
+                // Store login state if remember me is checked
+                if (remember) {
+                    localStorage.setItem('userEmail', email);
+                }
+
+                // Redirect to main store after 2 seconds
+                setTimeout(() => {
+                    window.location.href = 'blood-hent-store.html';
+                }, 2000);
+            }, 1500);
+        });
+
+        // Forgot password handler
+        forgotPasswordLink.addEventListener('click', function(e) {
+            e.preventDefault();
+            const email = document.getElementById('email').value;
+            
+            if (!email) {
+                showError('يرجى إدخال البريد الإلكتروني أولاً');
+                return;
+            }
+
+            if (!isValidEmail(email)) {
+                showError('يرجى إدخال بريد إلكتروني صحيح');
+                return;
+            }
+
+            showSuccess('تم إرسال رابط استعادة كلمة المرور إلى بريدك الإلكتروني');
+        });
+
+        // Social login handlers
+        googleLoginBtn.addEventListener('click', function() {
+            loading.style.display = 'block';
+            setTimeout(() => {
+                loading.style.display = 'none';
+                const email = 'google_user@example.com'; // في التطبيق الحقيقي، سيتم الحصول عليه من Google
+                if (typeof bloodHuntLogger !== 'undefined') {
+                    bloodHuntLogger.logLogin(email, 'google');
+                }
+                showSuccess('تم تسجيل الدخول بواسطة Google بنجاح!');
+                setTimeout(() => {
+                    window.location.href = 'blood-hent-store.html';
+                }, 2000);
+            }, 1500);
+        });
+
+        facebookLoginBtn.addEventListener('click', function() {
+            loading.style.display = 'block';
+            setTimeout(() => {
+                loading.style.display = 'none';
+                const email = 'facebook_user@example.com'; // في التطبيق الحقيقي، سيتم الحصول عليه من Facebook
+                if (typeof bloodHuntLogger !== 'undefined') {
+                    bloodHuntLogger.logLogin(email, 'facebook');
+                }
+                showSuccess('تم تسجيل الدخول بواسطة Facebook بنجاح!');
+                setTimeout(() => {
+                    window.location.href = 'blood-hent-store.html';
+                }, 2000);
+            }, 1500);
+        });
+
+        // Helper functions
+        function showError(message) {
+            errorMessage.textContent = message;
+            errorMessage.style.display = 'block';
+            setTimeout(() => {
+                errorMessage.style.display = 'none';
+            }, 5000);
+        }
+
+        function showSuccess(message) {
+            successMessage.textContent = message;
+            successMessage.style.display = 'block';
+        }
+
+        function isValidEmail(email) {
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return emailRegex.test(email);
+        }
+
+        // Load remembered email if exists
+        window.addEventListener('load', function() {
+            const rememberedEmail = localStorage.getItem('userEmail');
+            if (rememberedEmail) {
+                document.getElementById('email').value = rememberedEmail;
+                document.getElementById('remember').checked = true;
+            }
+        });
+    </script>
+    
+    <!-- نظام السجلات BLOOD HUNT -->
+    <script src="logger.js"></script>
+</body>
+</html>

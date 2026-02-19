@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BLOOD HUNT - متجر الملابس</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+}
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #ffffff;
+            color: #000000;
+            line-height: 1.6;
+        }
+
+        /* Header */
+        header {
+            background-color: #000000;
+            color: #ffffff;
+            padding: 20px 0;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .header-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: bold;
+            letter-spacing: 2px;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 30px;
+        }
+
+        nav a {
+            color: #ffffff;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        nav a:hover {
+            color: #cccccc;
+        }
+
+        /* Hero Section */
+        
+        .hero {
+            background-color: #000000;
+            color: #ffffff;
+            text-align: center; background-image: url('https://media.discordapp.net/attachments/1286964892842070037/1463687654745964686/245a414b570cb6cc859a8e1c7214bef3.jpg?ex=6972bcda&is=69716b5a&hm=5f22fa9c744240d811fda2595c1d834c159bf19db0ec3c47fc26ec7ef9855b9f&=&format=webp&width=1032&height=619');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            position: relative;
+            padding: 100px 20px;
+            
+        }
+
+        .hero h1 {
+            font-size: 48px;
+            margin-bottom: 20px;
+            letter-spacing: 3px;
+        }
+
+        .hero p {
+            font-size: 20px;
+            margin-bottom: 30px;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 15px 40px;
+            background-color: #ffffff;
+            color: #000000;
+            text-decoration: none;
+            font-weight: bold;
+            border: 2px solid #ffffff;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            background-color: #000000;
+            color: #ffffff;
+        }
+
+        /* Products Section */
+        .products {
+            max-width: 1200px;
+            margin: 60px auto;
+            padding: 0 20px;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 36px;
+            margin-bottom: 50px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+        }
+
+        .product-card {
+            border: 2px solid #000000;
+            padding: 20px;
+            text-align: center;
+            transition: transform 0.3s, box-shadow 0.3s;
+            background-color: #ffffff;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+
+        .product-image {
+            width: 100%;
+            height: 300px;
+            background-color: #f0f0f0;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            color: #666;
+            border: 1px solid #e0e0e0;
+            overflow: hidden;
+        }
+
+        .product-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .product-title {
+            font-size: 20px;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+
+        .product-price {
+            font-size: 24px;
+            margin-bottom: 15px;
+            font-weight: bold;
+        }
+
+        .add-to-cart {
+            padding: 10px 30px;
+            background-color: #000000;
+            color: #ffffff;
+            border: 2px solid #000000;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .add-to-cart:hover {
+            background-color: #ffffff;
+            color: #000000;
+        }
+
+        /* Categories */
+        .categories {
+            background-color: #f5f5f5;
+            padding: 60px 20px;
+            margin: 60px 0;
+        }
+
+        .categories-grid {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .category-card {
+            background-color: #000000;
+            color: #ffffff;
+            padding: 40px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .category-card:hover {
+            background-color: #ffffff;
+            color: #000000;
+            border: 2px solid #000000;
+        }
+
+        .category-card h3 {
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+
+        /* Footer */
+        footer {
+            background-color: #000000;
+            color: #ffffff;
+            padding: 40px 20px;
+            text-align: center;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        .footer-section h3 {
+            margin-bottom: 15px;
+            font-size: 20px;
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section ul li {
+            margin-bottom: 10px;
+        }
+
+        .footer-section a {
+            color: #ffffff;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-section a:hover {
+            color: #cccccc;
+        }
+
+        .copyright {
+            border-top: 1px solid #333;
+            padding-top: 20px;
+            margin-top: 20px;
+        }
+
+        /* Cart Icon */
+        .cart-icon {
+            position: relative;
+            cursor: pointer;
+        }
+
+        .cart-count {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background-color: #ffffff;
+            color: #000000;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        @media (max-width: 768px) {
+            .header-container {
+                flex-direction: column;
+                gap: 20px;
+            }
+
+            nav ul {
+                flex-direction: column;
+                gap: 10px;
+                text-align: center;
+            }
+
+            .hero h1 {
+                font-size: 32px;
+            }
+
+            .hero p {
+                font-size: 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <div class="logo">BLOOD HUNT</div>
+            <nav>
+                <ul>
+                    <li><a href="#home">الرئيسية</a></li>
+                    <li><a href="#products">المنتجات</a></li>
+                    <li><a href="#categories">الأقسام</a></li>
+                    <li><a href="#contact">اتصل بنا</a></li>
+                    <li><a href="login.html">تسجيل دخول</a></li>
+                    <li class="cart-icon">
+                        <a href="#cart">🛒 السلة</a>
+                        <span class="cart-count">0</span>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <h1>BLOOD HUNT</h1>
+        <a href="#products" class="btn">تسوق الآن</a>
+    </section>
+
+    <!-- Categories Section -->
+    <section class="categories" id="categories">
+        <h2 class="section-title">Sections</h2>
+        <div class="categories-grid">
+            <div class="category-card">
+                <h3>هوديات رجاليه</h3>
+            </div>
+            <div class="category-card">
+                <h3> هوديات نسائيه</h3>
+            </div>
+            <div class="category-card">
+                <h3>إكسسوارات</h3>
+            </div>
+        </div>
+    </section>
+
+    <!-- Products Section -->
+    <section class="products" id="products">
+        <h2 class="section-title">Our products</h2>
+        <div class="products-grid">
+
+            <div class="product-card">
+                <div class="product-image">
+                    <img src="https://media.discordapp.net/attachments/1286964892842070037/1463691054237876399/Black_and_Gray_Modern_Man_Stylish_Instagram_Post.jpg?ex=6972c005&is=69716e85&hm=fc2fdcb01574d70c6a5050ca1e894b338e6459d1a37fdbd78d4042439bc8f5d5&=&format=webp&width=345&height=350" >
+                </div>
+                <h3 class="product-title"> Soon </h3>
+                <p class="product-price"> ⃁ </p>
+                <button class="add-to-cart">أضف للسلة</button>
+            </div>
+
+            <div class="product-card">
+                <div class="product-image">
+                    <img src="https://media.discordapp.net/attachments/1286964892842070037/1463691054237876399/Black_and_Gray_Modern_Man_Stylish_Instagram_Post.jpg?ex=6972c005&is=69716e85&hm=fc2fdcb01574d70c6a5050ca1e894b338e6459d1a37fdbd78d4042439bc8f5d5&=&format=webp&width=345&height=350" >
+                </div>
+                <h3 class="product-title"> Soon </h3>
+                <p class="product-price"> ⃁ </p>
+                <button class="add-to-cart">أضف للسلة</button>
+            </div>
+
+            <div class="product-card">
+                <div class="product-image">
+                    <img src="https://media.discordapp.net/attachments/1286964892842070037/1463691054237876399/Black_and_Gray_Modern_Man_Stylish_Instagram_Post.jpg?ex=6972c005&is=69716e85&hm=fc2fdcb01574d70c6a5050ca1e894b338e6459d1a37fdbd78d4042439bc8f5d5&=&format=webp&width=345&height=350" >
+                </div>
+                <h3 class="product-title"> Soon </h3>
+                <p class="product-price"> ⃁ </p>
+                <button class="add-to-cart">أضف للسلة</button>
+            </div>
+
+            <div class="product-card">
+                 <div class="product-image">
+                    <img src="https://media.discordapp.net/attachments/1286964892842070037/1463691054237876399/Black_and_Gray_Modern_Man_Stylish_Instagram_Post.jpg?ex=6972c005&is=69716e85&hm=fc2fdcb01574d70c6a5050ca1e894b338e6459d1a37fdbd78d4042439bc8f5d5&=&format=webp&width=345&height=350" >
+                </div>
+                <h3 class="product-title"> Soon </h3>
+                <p class="product-price"> ⃁ </p>
+                <button class="add-to-cart">أضف للسلة</button>
+            </div>
+
+            <div class="product-card">
+                <div class="product-image">
+                    <img src="https://media.discordapp.net/attachments/1286964892842070037/1463691054237876399/Black_and_Gray_Modern_Man_Stylish_Instagram_Post.jpg?ex=6972c005&is=69716e85&hm=fc2fdcb01574d70c6a5050ca1e894b338e6459d1a37fdbd78d4042439bc8f5d5&=&format=webp&width=345&height=350" >
+                </div>
+                <h3 class="product-title"> Soon </h3>
+                <p class="product-price"> ⃁ </p>
+                <button class="add-to-cart">أضف للسلة</button>
+            </div>
+
+            <div class="product-card">
+                <div class="product-image">
+                    <img src="https://media.discordapp.net/attachments/1286964892842070037/1463691054237876399/Black_and_Gray_Modern_Man_Stylish_Instagram_Post.jpg?ex=6972c005&is=69716e85&hm=fc2fdcb01574d70c6a5050ca1e894b338e6459d1a37fdbd78d4042439bc8f5d5&=&format=webp&width=345&height=350" >
+                </div>
+                <h3 class="product-title"> Soon </h3>
+                <p class="product-price"> ⃁ </p>
+                <button class="add-to-cart">أضف للسلة</button>
+            </div>
+        </div>
+        
+    </section>
+
+    <!-- Footer -->
+    <footer id="contact">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>BLOOD HUNT</h3>
+                <div class="footer-section">
+                    <h3>تواصل معنا</h3>
+                    <ul>
+                        <li>  البريد : hassmabak@gmail.com</li>
+                        <li>  انستغرام : bloodhunt.om</li>
+                        <li>الهاتف : 94498195</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-section">
+                <h3>روابط سريعة</h3>
+                <ul>
+                    <li><a href="#home">الرئيسية</a></li>
+                    <li><a href="#products">المنتجات</a></li>
+                    <li><a href="#categories">الأقسام</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>خدمة العملاء</h3>
+                <ul>
+                    <li><a href="#">سياسة الإرجاع</a></li>
+                    <li><a href="#">الشحن والتوصيل</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2026 BLOOD HUNT. جميع الحقوق محفوظة.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Simple cart functionality
+        let cartCount = 0;
+        const cartCountElement = document.querySelector('.cart-count');
+        const addToCartButtons = document.querySelectorAll('.add-to-cart');
+
+        addToCartButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                cartCount++;
+                cartCountElement.textContent = cartCount;
+                this.textContent = 'تمت الإضافة ✓';
+                this.style.backgroundColor = '#ffffff';
+                this.style.color = '#000000';
+                
+                setTimeout(() => {
+                    this.textContent = 'أضف للسلة';
+                    this.style.backgroundColor = '#000000';
+                    this.style.color = '#ffffff';
+                }, 1500);
+            });
+        });
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    </script>
+    
+    <!-- نظام السجلات BLOOD HUNT -->
+    <script src="logger.js"></script>
+</body>
+</html>

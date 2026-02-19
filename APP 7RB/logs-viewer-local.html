@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>عرض السجلات - BLOOD HUNT (محلي)</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f5f5f5;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background-color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            padding: 30px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            border-bottom: 3px solid #000000;
+            padding-bottom: 20px;
+        }
+
+        .header h1 {
+            font-size: 36px;
+            color: #000000;
+            margin-bottom: 10px;
+        }
+
+        .warning {
+            background-color: #fff3cd;
+            border: 2px solid #ffc107;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            color: #856404;
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background-color: #000000;
+            color: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .stat-card h3 {
+            font-size: 32px;
+            margin-bottom: 10px;
+        }
+
+        .stat-card p {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+
+        .controls {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .controls button {
+            padding: 10px 15px;
+            border: 2px solid #000000;
+            background-color: #000000;
+            color: #ffffff;
+            cursor: pointer;
+            font-weight: bold;
+            border-radius: 5px;
+            transition: all 0.3s;
+        }
+
+        .controls button:hover {
+            background-color: #ffffff;
+            color: #000000;
+        }
+
+        .controls button.export {
+            background-color: #28a745;
+            border-color: #28a745;
+        }
+
+        .controls button.clear {
+            background-color: #dc3545;
+            border-color: #dc3545;
+        }
+
+        .filter-buttons {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            padding: 8px 15px;
+            border: 2px solid #000000;
+            background-color: #ffffff;
+            color: #000000;
+            cursor: pointer;
+            border-radius: 5px;
+            font-size: 12px;
+            transition: all 0.3s;
+        }
+
+        .filter-btn.active {
+            background-color: #000000;
+            color: #ffffff;
+        }
+
+        .logs-container {
+            margin-top: 20px;
+        }
+
+        .log-entry {
+            background-color: #f9f9f9;
+            border: 1px solid #e0e0e0;
+            border-radius: 5px;
+            padding: 15px;
+            margin-bottom: 15px;
+            transition: all 0.3s;
+        }
+
+        .log-entry:hover {
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .log-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .log-type {
+            display: inline-block;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+            color: #ffffff;
+        }
+
+        .log-type.PAGE_VISIT { background-color: #2196F3; }
+        .log-type.REGISTRATION { background-color: #4CAF50; }
+        .log-type.LOGIN { background-color: #FF9800; }
+        .log-type.LOGIN_ATTEMPT_FAILED { background-color: #F44336; }
+        .log-type.ADD_TO_CART { background-color: #9C27B0; }
+        .log-type.LINK_CLICK { background-color: #00BCD4; }
+        .log-type.DEVICE_INFO { background-color: #607D8B; }
+        .log-type.PAGE_TIME_SPENT { background-color: #795548; }
+
+        .log-time {
+            color: #666666;
+            font-size: 12px;
+        }
+
+        .log-details {
+            margin-top: 10px;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        .log-details strong {
+            color: #000000;
+        }
+
+        .no-logs {
+            text-align: center;
+            padding: 40px;
+            color: #666666;
+            font-size: 18px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📊 سجلات متجر BLOOD HUNT</h1>
+            <p>عرض جميع الأنشطة والزوار وتسجيلات الحسابات (نسخة محلية)</p>
+        </div>
+
+        <div class="warning">
+            ⚠️ <strong>ملاحظة:</strong> هذه النسخة تعرض السجلات المحفوظة في المتصفح فقط (localStorage).
+            لتشغيل النسخة الكاملة مع الخادم، يرجى تثبيت Node.js وتشغيل الخادم.
+        </div>
+
+        <div class="stats" id="stats">
+            <div class="stat-card">
+                <h3 id="totalLogs">0</h3>
+                <p>إجمالي السجلات</p>
+            </div>
+            <div class="stat-card">
+                <h3 id="pageVisits">0</h3>
+                <p>زيارات الصفحات</p>
+            </div>
+            <div class="stat-card">
+                <h3 id="registrations">0</h3>
+                <p>تسجيلات جديدة</p>
+            </div>
+            <div class="stat-card">
+                <h3 id="logins">0</h3>
+                <p>تسجيلات دخول</p>
+            </div>
+            <div class="stat-card">
+                <h3 id="uniqueVisitors">0</h3>
+                <p>زوار فريدون</p>
+            </div>
+        </div>
+
+        <div class="controls">
+            <button onclick="loadLogs()">تحديث السجلات</button>
+            <button class="export" onclick="exportLogs()">تصدير السجلات (JSON)</button>
+            <button class="clear" onclick="clearLogs()">مسح السجلات</button>
+            <select id="typeFilter" onchange="filterByType()">
+                <option value="">جميع الأنواع</option>
+                <option value="PAGE_VISIT">زيارات الصفحات</option>
+                <option value="REGISTRATION">تسجيلات جديدة</option>
+                <option value="LOGIN">تسجيلات دخول</option>
+                <option value="LOGIN_ATTEMPT_FAILED">محاولات فاشلة</option>
+                <option value="ADD_TO_CART">إضافة للسلة</option>
+                <option value="LINK_CLICK">نقرات على الروابط</option>
+            </select>
+            <div class="filter-buttons">
+                <button class="filter-btn active" onclick="filterLogs('all')">الكل</button>
+                <button class="filter-btn" onclick="filterLogs('today')">اليوم</button>
+                <button class="filter-btn" onclick="filterLogs('week')">هذا الأسبوع</button>
+            </div>
+        </div>
+
+        <div class="logs-container" id="logsContainer">
+            <div class="no-logs">جاري تحميل السجلات...</div>
+        </div>
+    </div>
+
+    <script>
+        let allLogs = [];
+        let currentFilter = 'all';
+        let currentTypeFilter = '';
+
+        // تحميل السجلات من localStorage
+        function loadLogs() {
+            try {
+                const logsStr = localStorage.getItem('bloodHuntLogs');
+                if (logsStr) {
+                    allLogs = JSON.parse(logsStr);
+                } else {
+                    allLogs = [];
+                }
+                
+                calculateStats();
+                applyFilters();
+            } catch (error) {
+                console.error('خطأ في تحميل السجلات:', error);
+                document.getElementById('logsContainer').innerHTML = 
+                    '<div class="no-logs">❌ خطأ في تحميل السجلات</div>';
+            }
+        }
+
+        // حساب الإحصائيات
+        function calculateStats() {
+            const stats = {
+                total: allLogs.length,
+                pageVisits: 0,
+                registrations: 0,
+                logins: 0,
+                uniqueIPs: new Set()
+            };
+
+            allLogs.forEach(log => {
+                if (log.ip) stats.uniqueIPs.add(log.ip);
+                
+                switch(log.type) {
+                    case 'PAGE_VISIT':
+                        stats.pageVisits++;
+                        break;
+                    case 'REGISTRATION':
+                        stats.registrations++;
+                        break;
+                    case 'LOGIN':
+                        stats.logins++;
+                        break;
+                }
+            });
+
+            document.getElementById('totalLogs').textContent = stats.total;
+            document.getElementById('pageVisits').textContent = stats.pageVisits;
+            document.getElementById('registrations').textContent = stats.registrations;
+            document.getElementById('logins').textContent = stats.logins;
+            document.getElementById('uniqueVisitors').textContent = stats.uniqueIPs.size;
+        }
+
+        // تطبيق الفلاتر
+        function applyFilters() {
+            let filteredLogs = [...allLogs];
+
+            // فلتر النوع
+            if (currentTypeFilter) {
+                filteredLogs = filteredLogs.filter(log => log.type === currentTypeFilter);
+            }
+
+            // فلتر التاريخ
+            const now = new Date();
+            switch(currentFilter) {
+                case 'today':
+                    const today = now.toISOString().split('T')[0];
+                    filteredLogs = filteredLogs.filter(log => {
+                        const logDate = new Date(log.timestamp).toISOString().split('T')[0];
+                        return logDate === today;
+                    });
+                    break;
+                case 'week':
+                    const weekAgo = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
+                    filteredLogs = filteredLogs.filter(log => {
+                        return new Date(log.timestamp) >= weekAgo;
+                    });
+                    break;
+            }
+
+            displayLogs(filteredLogs);
+        }
+
+        // فلتر حسب التاريخ
+        function filterLogs(filter) {
+            currentFilter = filter;
+            
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+
+            applyFilters();
+        }
+
+        // فلتر حسب النوع
+        function filterByType() {
+            currentTypeFilter = document.getElementById('typeFilter').value;
+            applyFilters();
+        }
+
+        // عرض السجلات
+        function displayLogs(logs) {
+            const container = document.getElementById('logsContainer');
+
+            if (logs.length === 0) {
+                container.innerHTML = '<div class="no-logs">لا توجد سجلات لعرضها</div>';
+                return;
+            }
+
+            logs.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
+
+            container.innerHTML = logs.map(log => {
+                const date = new Date(log.timestamp);
+                const dateStr = date.toLocaleString('ar-SA', {
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric',
+                    hour: '2-digit',
+                    minute: '2-digit'
+                });
+
+                let details = '';
+
+                switch(log.type) {
+                    case 'PAGE_VISIT':
+                        details = `
+                            <strong>الصفحة:</strong> ${log.page || 'N/A'}<br>
+                            <strong>المتصفح:</strong> ${log.userAgent?.substring(0, 50) || 'N/A'}...<br>
+                            <strong>الدقة:</strong> ${log.screenResolution || 'N/A'}<br>
+                            <strong>IP:</strong> ${log.ip || 'N/A'}
+                        `;
+                        break;
+                    case 'REGISTRATION':
+                        details = `
+                            <strong>البريد:</strong> ${log.userData?.email || 'N/A'}<br>
+                            <strong>الاسم:</strong> ${log.userData?.name || 'N/A'}<br>
+                            <strong>الهاتف:</strong> ${log.userData?.phone || 'N/A'}<br>
+                            <strong>IP:</strong> ${log.ip || 'N/A'}
+                        `;
+                        break;
+                    case 'LOGIN':
+                        details = `
+                            <strong>البريد:</strong> ${log.email || 'N/A'}<br>
+                            <strong>الطريقة:</strong> ${log.loginMethod || 'email'}<br>
+                            <strong>IP:</strong> ${log.ip || 'N/A'}
+                        `;
+                        break;
+                    case 'LOGIN_ATTEMPT_FAILED':
+                        details = `
+                            <strong>البريد:</strong> ${log.email || 'N/A'}<br>
+                            <strong>السبب:</strong> ${log.reason || 'N/A'}<br>
+                            <strong>IP:</strong> ${log.ip || 'N/A'}
+                        `;
+                        break;
+                    case 'ADD_TO_CART':
+                        details = `
+                            <strong>المنتج:</strong> ${log.product?.name || 'N/A'}<br>
+                            <strong>السعر:</strong> ${log.product?.price || 'N/A'}<br>
+                            <strong>IP:</strong> ${log.ip || 'N/A'}
+                        `;
+                        break;
+                    default:
+                        details = `<pre>${JSON.stringify(log, null, 2)}</pre>`;
+                }
+
+                return `
+                    <div class="log-entry">
+                        <div class="log-header">
+                            <span class="log-type ${log.type}">${getTypeName(log.type)}</span>
+                            <span class="log-time">${dateStr}</span>
+                        </div>
+                        <div class="log-details">
+                            ${details}
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        // الحصول على اسم النوع بالعربية
+        function getTypeName(type) {
+            const names = {
+                'PAGE_VISIT': 'زيارة صفحة',
+                'REGISTRATION': 'تسجيل حساب',
+                'LOGIN': 'تسجيل دخول',
+                'LOGIN_ATTEMPT_FAILED': 'محاولة فاشلة',
+                'ADD_TO_CART': 'إضافة للسلة',
+                'LINK_CLICK': 'نقر على رابط',
+                'DEVICE_INFO': 'معلومات الجهاز',
+                'PAGE_TIME_SPENT': 'وقت على الصفحة'
+            };
+            return names[type] || type;
+        }
+
+        // تصدير السجلات
+        function exportLogs() {
+            const dataStr = JSON.stringify(allLogs, null, 2);
+            const dataBlob = new Blob([dataStr], {type: 'application/json'});
+            const url = URL.createObjectURL(dataBlob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = `bloodhunt-logs-${new Date().toISOString().split('T')[0]}.json`;
+            link.click();
+        }
+
+        // مسح السجلات
+        function clearLogs() {
+            if (confirm('هل أنت متأكد من مسح جميع السجلات؟')) {
+                localStorage.removeItem('bloodHuntLogs');
+                allLogs = [];
+                loadLogs();
+                alert('تم مسح السجلات بنجاح');
+            }
+        }
+
+        // تحميل عند فتح الصفحة
+        window.addEventListener('load', () => {
+            loadLogs();
+        });
+
+        // تحديث تلقائي كل 10 ثوان
+        setInterval(() => {
+            loadLogs();
+        }, 10000);
+    </script>
+</body>
+</html>
