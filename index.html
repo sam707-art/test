@@ -1,0 +1,827 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>قدراتك</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Reem+Kufi:wght@500;700&family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&display=swap">
+<style>
+/* Layout: answer-sheet motif — bubbles (أ ب ج د) as the recurring device; highlighter yellow marks what matters */
+:root{
+  --bg:#EEF4F3; --paper:#FFFFFF; --ink:#0C2E33; --muted:#557074; --line:#D3E1DF;
+  --teal:#0B6B6F; --teal-soft:#DCEDEB; --hl:#FFD43B; --hl-ink:#3A2E00;
+  --ok:#1D8A4E; --ok-soft:#DDF3E6; --bad:#C8423B; --bad-soft:#FBE3E1;
+  --display:"Reem Kufi","IBM Plex Sans Arabic",Tahoma,sans-serif;
+  --body:"IBM Plex Sans Arabic","Segoe UI",Tahoma,sans-serif;
+  --shadow:0 1px 0 rgba(12,46,51,.06),0 8px 24px -12px rgba(12,46,51,.18);
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0B1B1E; --paper:#11272B; --ink:#E6F1EF; --muted:#93AEB0; --line:#22403F;
+  --teal:#3FC1BC; --teal-soft:#16393A; --hl:#FFD43B; --hl-ink:#2A2100;
+  --ok:#49C27F; --ok-soft:#173A28; --bad:#F07A72; --bad-soft:#3E1F1D;
+  --shadow:0 1px 0 rgba(0,0,0,.3),0 8px 24px -12px rgba(0,0,0,.6); color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0B1B1E; --paper:#11272B; --ink:#E6F1EF; --muted:#93AEB0; --line:#22403F;
+  --teal:#3FC1BC; --teal-soft:#16393A; --hl:#FFD43B; --hl-ink:#2A2100;
+  --ok:#49C27F; --ok-soft:#173A28; --bad:#F07A72; --bad-soft:#3E1F1D;
+  --shadow:0 1px 0 rgba(0,0,0,.3),0 8px 24px -12px rgba(0,0,0,.6); color-scheme:dark}
+
+[hidden]{display:none!important}
+*{box-sizing:border-box}
+html{direction:rtl}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.75;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:0 40px}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--bg)}
+.wrap{max-width:980px;margin:0 auto}
+h1,h2,h3{font-family:var(--display);text-wrap:balance;line-height:1.3;margin:0}
+button{font:inherit;color:inherit;cursor:pointer}
+button:focus-visible,summary:focus-visible,select:focus-visible{outline:3px solid var(--hl);outline-offset:2px}
+.m{direction:ltr;unicode-bidi:isolate;display:inline-block;font-variant-numeric:tabular-nums;font-weight:600}
+.hl{background:linear-gradient(transparent 55%,var(--hl) 55%,var(--hl) 90%,transparent 90%);padding:0 .1em;color:inherit}
+
+/* header */
+header.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);border-bottom:1px solid var(--line)}
+.bar{display:flex;align-items:center;justify-content:space-between;gap:12px;padding-block:10px;max-width:980px;margin:0 auto}
+.brand{display:flex;align-items:center;gap:10px;font-family:var(--display);font-size:22px;font-weight:700;background:none;border:0;padding:0}
+.bubbles{display:flex;gap:3px}
+.bubbles i{width:11px;height:11px;border-radius:50%;border:2px solid var(--teal)}
+.bubbles i.f{background:var(--hl);border-color:var(--hl)}
+nav.tabs{display:flex;gap:4px;background:var(--paper);border:1px solid var(--line);border-radius:999px;padding:4px}
+nav.tabs button{border:0;background:none;padding:6px 14px;border-radius:999px;font-weight:600;font-size:14px;color:var(--muted)}
+nav.tabs button[aria-current="true"]{background:var(--teal);color:var(--paper)}
+.xp{display:flex;align-items:center;gap:6px;font-weight:700;font-size:14px;font-variant-numeric:tabular-nums;white-space:nowrap}
+.xp b{background:var(--hl);color:var(--hl-ink);border-radius:999px;padding:2px 10px}
+@media (max-width:560px){.brand span.t{display:none}.xp .lbl{display:none}nav.tabs button{padding:6px 8px;font-size:13px}.bar{gap:6px}}
+@media (max-width:400px){.brand{display:none}}
+body.gate header.top{display:none}
+
+/* hero */
+.hero{display:grid;grid-template-columns:1.35fr 1fr;gap:20px;padding-block:28px 8px;align-items:stretch}
+@media (max-width:760px){.hero{grid-template-columns:1fr}}
+.hero h1{font-size:clamp(30px,6vw,50px);font-weight:700}
+.hero p.lead{color:var(--muted);font-size:17px;max-width:46ch;margin:14px 0 20px}
+.cta{display:flex;flex-wrap:wrap;gap:10px}
+.btn{border:2px solid var(--teal);background:var(--teal);color:var(--paper);border-radius:14px;padding:11px 20px;font-weight:700;font-size:16px;transition:transform .15s}
+.btn:hover{transform:translateY(-2px)}
+.btn.ghost{background:transparent;color:var(--teal)}
+.btn.hlb{background:var(--hl);border-color:var(--hl);color:var(--hl-ink)}
+.quote{margin-top:22px;font-family:var(--display);font-size:18px;color:var(--teal);min-height:2.6em}
+.goal{background:var(--paper);border:1px solid var(--line);border-radius:22px;padding:20px;box-shadow:var(--shadow);display:flex;flex-direction:column;gap:14px}
+.goal h3{font-size:18px}
+.ringrow{display:flex;align-items:center;gap:18px}
+.ring{position:relative;width:112px;height:112px;flex:none}
+.ring svg{width:100%;height:100%;transform:rotate(-90deg)}
+.ring .n{position:absolute;inset:0;display:grid;place-items:center;text-align:center;font-family:var(--display);font-size:26px;line-height:1.1}
+.ring .n small{display:block;font-family:var(--body);font-size:12px;color:var(--muted)}
+.stats{display:grid;grid-template-columns:1fr 1fr;gap:8px;flex:1}
+.stat{background:var(--teal-soft);border-radius:14px;padding:8px 12px}
+.stat .v{font-family:var(--display);font-size:22px;font-variant-numeric:tabular-nums}
+.stat .k{font-size:12px;color:var(--muted)}
+.rank{font-size:14px;color:var(--muted)}
+.rank b{color:var(--ink)}
+.rankbar{height:8px;background:var(--teal-soft);border-radius:99px;overflow:hidden;margin-top:6px}
+.rankbar i{display:block;height:100%;background:var(--teal);border-radius:99px;transition:width .5s}
+
+.secthead{display:flex;align-items:end;justify-content:space-between;gap:12px;flex-wrap:wrap;margin:34px 0 14px}
+.secthead h2{font-size:26px}
+.secthead p{margin:4px 0 0;color:var(--muted)}
+.quick{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px}
+.qchip{background:var(--paper);border:1px solid var(--line);border-radius:16px;padding:12px 14px;text-align:right;display:flex;flex-direction:column;gap:2px;transition:border-color .15s,transform .15s}
+.qchip:hover{border-color:var(--teal);transform:translateY(-2px)}
+.qchip .s{font-size:12px;color:var(--muted)}
+.qchip .t{font-weight:700}
+.qchip .pb{height:5px;background:var(--teal-soft);border-radius:9px;margin-top:6px;overflow:hidden}
+.qchip .pb i{display:block;height:100%;background:var(--hl)}
+
+/* segmented */
+.seg{display:inline-flex;background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:4px;gap:4px;flex-wrap:wrap}
+.seg button{border:0;background:none;padding:7px 16px;border-radius:10px;font-weight:600;color:var(--muted)}
+.seg button[aria-pressed="true"]{background:var(--ink);color:var(--bg)}
+
+/* learn */
+.topics{display:grid;gap:12px}
+details.topic{background:var(--paper);border:1px solid var(--line);border-radius:18px;overflow:hidden}
+details.topic summary{list-style:none;display:flex;align-items:center;gap:14px;padding:16px 18px;cursor:pointer}
+details.topic summary::-webkit-details-marker{display:none}
+.tnum{flex:none;width:38px;height:38px;border-radius:50%;border:2px solid var(--teal);display:grid;place-items:center;font-family:var(--display);color:var(--teal);font-size:16px}
+details[open] .tnum{background:var(--hl);border-color:var(--hl);color:var(--hl-ink)}
+.ttl{flex:1;min-width:0}
+.ttl h3{font-size:19px}
+.ttl p{margin:0;font-size:14px;color:var(--muted)}
+.chev{flex:none;transition:transform .2s;color:var(--muted)}
+details[open] .chev{transform:rotate(180deg)}
+.tbody{padding:0 18px 18px;display:grid;gap:14px}
+.tbody h4{margin:0 0 4px;font-size:14px;letter-spacing:.02em;color:var(--teal)}
+.tbody ul{margin:0;padding-inline-start:20px}
+.tbody li{margin:3px 0}
+.rules{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:8px}
+.rule{background:var(--teal-soft);border-radius:12px;padding:10px 12px;font-size:15px}
+.rule b{display:block;font-size:13px;color:var(--muted);font-weight:600}
+.example{border:2px dashed var(--line);border-radius:14px;padding:12px 14px}
+.example .q{font-weight:600}
+.example .a{margin-top:6px;color:var(--muted)}
+.example .a b{color:var(--ok)}
+.trap{background:var(--bad-soft);border-radius:12px;padding:10px 14px;font-size:15px}
+.trap b{color:var(--bad)}
+.tactions{display:flex;flex-wrap:wrap;gap:8px}
+.tableWrap{overflow-x:auto}
+table.rel{border-collapse:collapse;width:100%;font-size:14px;min-width:420px}
+table.rel th,table.rel td{border-bottom:1px solid var(--line);padding:7px 8px;text-align:right}
+table.rel th{color:var(--muted);font-weight:600}
+
+/* practice */
+.setup{background:var(--paper);border:1px solid var(--line);border-radius:22px;padding:20px;display:grid;gap:16px;box-shadow:var(--shadow)}
+.field{display:grid;gap:6px}
+.field label{font-weight:700;font-size:14px}
+select{font:inherit;background:var(--bg);color:var(--ink);border:1px solid var(--line);border-radius:12px;padding:9px 12px;max-width:100%}
+.quiz{background:var(--paper);border:1px solid var(--line);border-radius:22px;padding:20px;box-shadow:var(--shadow);display:grid;gap:16px}
+.qmeta{display:flex;justify-content:space-between;align-items:center;gap:10px;font-size:14px;color:var(--muted);flex-wrap:wrap}
+.tag{background:var(--teal-soft);color:var(--teal);border-radius:999px;padding:2px 12px;font-weight:600}
+.progress{height:8px;background:var(--teal-soft);border-radius:99px;overflow:hidden}
+.progress i{display:block;height:100%;background:var(--teal);transition:width .3s}
+.passage{background:var(--bg);border-radius:14px;padding:12px 16px;font-size:15px;border-inline-start:4px solid var(--hl)}
+.stem{font-size:20px;font-weight:600;line-height:1.7}
+.stem .ask{display:block;font-size:14px;color:var(--muted);font-weight:500;margin-bottom:4px}
+.opts{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+@media (max-width:560px){.opts{grid-template-columns:1fr}}
+.opt{display:flex;align-items:center;gap:12px;text-align:right;background:var(--paper);border:2px solid var(--line);border-radius:16px;padding:12px 14px;font-size:17px;transition:border-color .15s,background .15s}
+.opt:hover:not(:disabled){border-color:var(--teal)}
+.opt .b{flex:none;width:32px;height:32px;border-radius:50%;border:2px solid var(--teal);display:grid;place-items:center;font-family:var(--display);color:var(--teal);font-size:15px}
+.opt.ok{border-color:var(--ok);background:var(--ok-soft)}
+.opt.ok .b{background:var(--ok);border-color:var(--ok);color:var(--paper)}
+.opt.bad{border-color:var(--bad);background:var(--bad-soft)}
+.opt.bad .b{background:var(--bad);border-color:var(--bad);color:var(--paper)}
+.opt:disabled{cursor:default}
+.explain{border-radius:14px;padding:12px 16px;font-size:15px}
+.explain.ok{background:var(--ok-soft)} .explain.bad{background:var(--bad-soft)}
+.explain .v{font-weight:700;display:block;margin-bottom:2px}
+.explain.ok .v{color:var(--ok)} .explain.bad .v{color:var(--bad)}
+.qfoot{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+.streakline{font-size:14px;color:var(--muted)}
+.result{text-align:center;display:grid;gap:14px;justify-items:center}
+.score{font-family:var(--display);font-size:64px;line-height:1;color:var(--teal);font-variant-numeric:tabular-nums}
+.sheet{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;max-width:520px}
+.sheet i{width:26px;height:26px;border-radius:50%;display:grid;place-items:center;font-style:normal;font-size:12px;font-weight:700;color:var(--paper)}
+.sheet i.ok{background:var(--ok)} .sheet i.bad{background:var(--bad)}
+#confetti{position:fixed;inset:0;pointer-events:none;z-index:20}
+.toast{position:fixed;bottom:calc(20px + env(safe-area-inset-bottom,0px));left:50%;transform:translateX(-50%) translateY(20px);background:var(--ink);color:var(--bg);padding:10px 18px;border-radius:999px;font-weight:700;opacity:0;transition:.25s;z-index:21;pointer-events:none;white-space:nowrap}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+/* login */
+.login{min-height:70vh;display:grid;place-items:center;padding-block:30px}
+.lcard{background:var(--paper);border:1px solid var(--line);border-radius:26px;padding:28px 22px;box-shadow:var(--shadow);max-width:430px;width:100%;display:grid;gap:16px;text-align:center}
+.lcard h1{font-size:34px}
+.lcard .bubbles{justify-content:center}.lcard .bubbles i{width:18px;height:18px;border-width:3px}
+.who{display:flex;align-items:center;gap:12px;background:var(--teal-soft);border-radius:16px;padding:12px;text-align:right}
+.av{width:44px;height:44px;border-radius:50%;flex:none;display:grid;place-items:center;font-family:var(--display);font-size:18px;color:#fff;background:var(--teal);overflow:hidden}
+.av img{width:100%;height:100%;object-fit:cover}
+.note{font-size:13px;color:var(--muted)}
+.btn.wide{width:100%}
+.banner{background:var(--teal-soft);border-radius:14px;padding:10px 14px;font-size:14px;margin-top:14px}
+/* progress */
+.pgrid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+@media (max-width:760px){.pgrid{grid-template-columns:1fr}}
+.panel{background:var(--paper);border:1px solid var(--line);border-radius:20px;padding:18px;display:grid;gap:12px;align-content:start;min-width:0}
+.panel h3{font-size:19px}
+.trow{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:2px 10px;align-items:center;font-size:14px}
+.trow .bar2{grid-column:1/-1;height:8px;background:var(--teal-soft);border-radius:9px;overflow:hidden}
+.trow .bar2 i{display:block;height:100%;border-radius:9px}
+.pill{display:inline-block;border-radius:999px;padding:1px 10px;font-size:12px;font-weight:700}
+.pill.bad{background:var(--bad-soft);color:var(--bad)}.pill.mid{background:var(--hl);color:var(--hl-ink)}.pill.ok{background:var(--ok-soft);color:var(--ok)}.pill.none{background:var(--teal-soft);color:var(--muted)}
+.weak{display:flex;align-items:center;justify-content:space-between;gap:10px;border:1px solid var(--line);border-radius:14px;padding:10px 12px}
+.weak b{display:block}.weak small{color:var(--muted)}
+.btn.sm{padding:6px 12px;font-size:14px;border-radius:10px}
+.lb{display:grid;gap:6px}
+.lbr{display:flex;align-items:center;gap:10px;padding:6px 8px;border-radius:12px}
+.lbr.me{background:var(--teal-soft)}
+.lbr .pos{width:24px;text-align:center;font-family:var(--display);color:var(--muted)}
+.lbr .nm{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.lbr .av{width:30px;height:30px;font-size:13px}
+.empty{color:var(--muted);font-size:14px}
+/* admin */
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+@media (max-width:620px){.kpis{grid-template-columns:1fr 1fr}}
+.kpi{background:var(--paper);border:1px solid var(--line);border-radius:16px;padding:12px 14px}
+.kpi .v{font-family:var(--display);font-size:26px;font-variant-numeric:tabular-nums}
+.kpi .k{font-size:12px;color:var(--muted)}
+.tbl{overflow-x:auto;background:var(--paper);border:1px solid var(--line);border-radius:18px}
+.tbl table{border-collapse:collapse;width:100%;min-width:620px;font-size:14px}
+.tbl th,.tbl td{padding:10px 12px;border-bottom:1px solid var(--line);text-align:right;vertical-align:middle}
+.tbl th{color:var(--muted);font-weight:600;font-size:13px}
+.tbl tr.st{cursor:pointer}.tbl tr.st:hover{background:var(--teal-soft)}
+.tbl td.num{font-variant-numeric:tabular-nums}
+.detail td{background:var(--bg)}
+.dgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:8px 18px}
+footer{margin-top:40px;color:var(--muted);font-size:13px;text-align:center}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="bar">
+    <button class="brand" id="homeBtn" aria-label="الرئيسية">
+      <span class="bubbles" aria-hidden="true"><i></i><i class="f"></i><i></i><i></i></span><span class="t">قدراتك</span>
+    </button>
+    <nav class="tabs" aria-label="أقسام الموقع">
+      <button data-go="home">الرئيسية</button>
+      <button data-go="learn">الشرح</button>
+      <button data-go="practice">التدريب</button>
+      <button data-go="progress">تقدّمي</button>
+      <button data-go="admin" id="adminTab" hidden>الأدمن</button>
+    </nav>
+    <div class="xp"><span class="lbl">نقاطك</span><b id="xpTop">0</b></div>
+  </div>
+</header>
+
+<main class="wrap">
+<!-- LOGIN -->
+<section id="v-login" hidden>
+  <div class="login"><div class="lcard">
+    <span class="bubbles" aria-hidden="true"><i></i><i class="f"></i><i></i><i></i></span>
+    <h1>قدراتك</h1>
+    <p style="margin:0;color:var(--muted)">سجّل دخولك عشان يتحفظ تقدمك، وتطلع في لوحة المتصدرين مع أخوياك.</p>
+    <div id="loginBox"><div class="note">جاري التحقق من حسابك…</div></div>
+    <div class="note">الدخول يكون بحساب Claude نفسه، وتقدر تسوي الحساب بجوجل. ما نطلب منك أي كلمة مرور هنا.</div>
+  </div></div>
+</section>
+
+<!-- HOME -->
+<section id="v-home">
+  <div class="hero">
+    <div>
+      <h1>كل سؤال تحلّه اليوم <span class="hl">يرفع درجتك</span> بكرة</h1>
+      <p class="lead">شرح مختصر لكل أنواع أسئلة القدرات، الكمي واللفظي، وبعده تدريب فوري يصحّح لك ويشرح الحل. عشر دقايق باليوم تفرق.</p>
+      <div class="cta">
+        <button class="btn hlb" data-go="practice">ابدأ تدريب سريع</button>
+        <button class="btn ghost" data-go="learn">راجع الشرح</button>
+      </div>
+      <div class="quote" id="quote"></div>
+    </div>
+    <aside class="goal" aria-label="هدفك اليوم">
+      <h3>هدفك اليوم: 20 سؤال</h3>
+      <div class="ringrow">
+        <div class="ring">
+          <svg viewBox="0 0 120 120" aria-hidden="true"><circle cx="60" cy="60" r="50" fill="none" stroke="var(--teal-soft)" stroke-width="12"/><circle id="ringArc" cx="60" cy="60" r="50" fill="none" stroke="var(--hl)" stroke-width="12" stroke-linecap="round" stroke-dasharray="314.16" stroke-dashoffset="314.16"/></svg>
+          <div class="n"><div><span id="todayN">0</span><small>من 20</small></div></div>
+        </div>
+        <div class="stats">
+          <div class="stat"><div class="v" id="streakN">0</div><div class="k">أيام متتالية</div></div>
+          <div class="stat"><div class="v" id="accN">–</div><div class="k">نسبة الصح</div></div>
+          <div class="stat"><div class="v" id="totalN">0</div><div class="k">أسئلة محلولة</div></div>
+          <div class="stat"><div class="v" id="xpN">0</div><div class="k">نقاط</div></div>
+        </div>
+      </div>
+      <div>
+        <div class="rank">مستواك: <b id="rankName">مبتدئ</b> · <span id="rankNext"></span></div>
+        <div class="rankbar"><i id="rankBar" style="width:0%"></i></div>
+      </div>
+    </aside>
+  </div>
+
+  <div class="secthead"><div><h2>اختر موضوع وابدأ</h2><p>اضغط على أي موضوع يفتح لك تدريب عليه مباشرة</p></div></div>
+  <div class="quick" id="quick"></div>
+</section>
+
+<!-- LEARN -->
+<section id="v-learn" hidden>
+  <div class="secthead">
+    <div><h2>الشرح</h2><p>الفكرة، القوانين، مثال محلول، والفخ اللي يطيح فيه أغلب الطلاب</p></div>
+    <div class="seg" role="group" aria-label="القسم">
+      <button data-sec="quant" aria-pressed="true">الكمي</button>
+      <button data-sec="verbal" aria-pressed="false">اللفظي</button>
+    </div>
+  </div>
+  <div class="topics" id="topics"></div>
+</section>
+
+<!-- PRACTICE -->
+<section id="v-practice" hidden>
+  <div class="secthead"><div><h2>التدريب</h2><p>كل إجابة صح = 10 نقاط، وخمس صح ورا بعض = 20 نقطة إضافية</p></div></div>
+  <div id="setup" class="setup">
+    <div class="field"><label>القسم</label>
+      <div class="seg" role="group" aria-label="اختيار القسم" id="pSec">
+        <button data-v="mix" aria-pressed="true">مختلط</button>
+        <button data-v="quant" aria-pressed="false">كمي</button>
+        <button data-v="verbal" aria-pressed="false">لفظي</button>
+      </div>
+    </div>
+    <div class="field"><label for="pTopic">الموضوع</label><select id="pTopic"></select></div>
+    <div class="field"><label>عدد الأسئلة</label>
+      <div class="seg" role="group" aria-label="عدد الأسئلة" id="pCount">
+        <button data-v="5" aria-pressed="false">5</button>
+        <button data-v="10" aria-pressed="true">10</button>
+        <button data-v="20" aria-pressed="false">20</button>
+      </div>
+    </div>
+    <div><button class="btn hlb" id="startBtn">ابدأ</button> <span class="streakline" id="poolInfo"></span></div>
+  </div>
+  <div id="quiz" class="quiz" hidden></div>
+</section>
+
+<!-- PROGRESS -->
+<section id="v-progress" hidden>
+  <div class="secthead"><div><h2>تقدّمي</h2><p id="pgSub">مستواك في كل موضوع، ووين تحتاج تركّز</p></div>
+    <button class="btn hlb" id="reviewWrong" hidden>راجع أخطائي</button></div>
+  <div class="kpis" id="pgKpis"></div>
+  <div id="syncNote"></div>
+  <div class="pgrid" style="margin-top:16px">
+    <div class="panel"><h3>نقاط الضعف</h3><div id="weakList" style="display:grid;gap:8px"></div></div>
+    <div class="panel"><h3>المتصدرين</h3><div class="lb" id="board"><div class="empty">سجّل دخولك عشان تشوف ترتيبك مع أخوياك.</div></div></div>
+    <div class="panel"><h3>الكمي</h3><div id="pgQuant" style="display:grid;gap:10px"></div></div>
+    <div class="panel"><h3>اللفظي</h3><div id="pgVerbal" style="display:grid;gap:10px"></div></div>
+  </div>
+</section>
+
+<!-- ADMIN -->
+<section id="v-admin" hidden>
+  <div class="secthead"><div><h2>لوحة الأدمن</h2><p>كل الطلاب، تقدمهم، ونقاط ضعفهم. اضغط على أي طالب يفتح لك التفاصيل</p></div></div>
+  <div class="kpis" id="adKpis"></div>
+  <div class="panel" style="margin-top:16px"><h3>أصعب المواضيع على الطلاب</h3><div id="adTopics" class="dgrid"></div></div>
+  <div class="tbl" style="margin-top:16px"><table><thead><tr><th>الطالب</th><th>النقاط</th><th>المحلولة</th><th>نسبة الصح</th><th>أضعف موضوع</th><th>آخر نشاط</th></tr></thead><tbody id="adRows"><tr><td colspan="6" class="empty">جاري تحميل بيانات الطلاب…</td></tr></tbody></table></div>
+</section>
+
+<footer>قدراتك · شرح وتدريب على اختبار القدرات العامة</footer>
+</main>
+<canvas id="confetti" aria-hidden="true"></canvas>
+<div class="toast" id="toast" role="status"></div>
+
+<script>
+const L=["أ","ب","ج","د"];
+const CMP=["القيمة الأولى أكبر","القيمة الثانية أكبر","القيمتان متساويتان","المعطيات غير كافية"];
+const m=s=>`<span class="m">${s}</span>`;
+
+/* ---------- TOPICS (شرح) ---------- */
+const TOPICS={
+quant:[
+ {id:"arith",t:"العمليات الحسابية والاختصارات",d:"اختصر الحساب بدل ما تحسب كل شيء",
+  idea:"أغلب أسئلة الحساب ما تبي منك ناتج دقيق بالقلم، تبي منك تلاحظ اختصار. انظر للخيارات قبل ما تحسب.",
+  rules:[["الضرب في 5",`اضرب في 10 واقسم على 2: ${m("48×5 = 480÷2 = 240")}`],["الضرب في 25",`اضرب في 100 واقسم على 4: ${m("36×25 = 3600÷4 = 900")}`],["الضرب في 9 و 99",`${m("37×99 = 3700 − 37 = 3663")}`],["آحاد الناتج",`لو الخيارات مختلفة في آخر رقم، احسب الآحاد فقط`]],
+  ex:{q:`${m("25 × 16")} = ؟`,a:`${m("25×16 = 25×4×4 = 100×4")} = <b>${m("400")}</b>`},
+  trap:"لا تبدأ بالضرب الطويل. فكّك العدد لعوامل تعطيك 10 أو 100."},
+ {id:"frac",t:"الكسور والأعداد العشرية",d:"توحيد المقامات والمقارنة السريعة",
+  idea:"الكسر = قسمة. للجمع والطرح وحّد المقامات، وللقسمة اقلب الثاني واضرب.",
+  rules:[["الجمع والطرح",`${m("a/b + c/d = (ad + bc) / bd")}`],["القسمة",`${m("(a/b) ÷ (c/d) = (a/b) × (d/c)")}`],["المقارنة",`اضرب تبادلي: ${m("3/5 ؟ 2/3")} ← ${m("9 ؟ 10")} فالثاني أكبر`],["كسور لازم تحفظها",`${m("1/4=0.25, 1/5=0.2, 1/8=0.125, 3/4=0.75")}`]],
+  ex:{q:`${m("3/4 − 1/6")} = ؟`,a:`المقام المشترك 12: ${m("9/12 − 2/12")} = <b>${m("7/12")}</b>`},
+  trap:"عند المقارنة لا تقارن البسط وحده. 7/12 أصغر من 2/3 مع إن 7 أكبر من 2."},
+ {id:"pct",t:"النسبة المئوية والمكسب والخسارة",d:"الجزء من الكل، والتغيّر بالنسبة",
+  idea:"النسبة المئوية = الجزء ÷ الكل × 100. وفي التغيّر دايم تقسم على القيمة الأصلية، مو الجديدة.",
+  rules:[["نسبة من عدد",`${m("20% × 350 = 0.2 × 350 = 70")}`],["نسبة التغيّر",`${m("(الجديد − الأصلي) ÷ الأصلي × 100")}`],["بعد خصم x%",`السعر × ${m("(1 − x/100)")}`],["زيادة ثم نقص بنفس النسبة",`النتيجة دايم نقص، مثلاً 10% ثم 10% = نقص ${m("1%")}`]],
+  ex:{q:"اشترى سلعة بـ 120 وباعها بـ 150، كم نسبة الربح؟",a:`الربح 30، ونقسمه على سعر الشراء: ${m("30÷120")} = <b>${m("25%")}</b>`},
+  trap:"نسبة الربح والخسارة تنسب لسعر الشراء (التكلفة)، مو لسعر البيع."},
+ {id:"ratio",t:"النسبة والتناسب",d:"طردي وعكسي وتقسيم المجموع",
+  idea:"اسأل نفسك: إذا زاد الأول، يزيد الثاني (طردي) ولا ينقص (عكسي)؟",
+  rules:[["طردي",`الكمية والسعر: ${m("a1/b1 = a2/b2")}`],["عكسي",`العمال والأيام: ${m("a1 × b1 = a2 × b2")}`],["تقسيم بنسبة",`النسبة ${m("3:5")} من 40 ← كل جزء = ${m("40 ÷ 8 = 5")}`]],
+  ex:{q:"4 عمال يخلصون عمل في 12 يوم، كم يوم يحتاج 6 عمال؟",a:`عكسي: ${m("4×12 = 6×x")} ← x = <b>${m("8")}</b> أيام`},
+  trap:"العمال والأيام عكسي. لا تضرب في نسبة الزيادة."},
+ {id:"speed",t:"السرعة والمسافة والزمن",d:"قانون واحد يحل كل شيء",
+  idea:"المسافة = السرعة × الزمن. غطِّ المجهول في المثلث واقرأ الباقي.",
+  rules:[["المسافة",`${m("d = v × t")}`],["السرعة",`${m("v = d ÷ t")}`],["الزمن",`${m("t = d ÷ v")}`],["تحويل الدقائق",`${m("30")} دقيقة = ${m("0.5")} ساعة، ${m("15")} دقيقة = ${m("0.25")} ساعة`]],
+  ex:{q:"سيارة سرعتها 90 كم/س، كم تقطع في ساعتين ونص؟",a:`${m("90 × 2.5")} = <b>${m("225")}</b> كم`},
+  trap:"وحّد الوحدات قبل الحساب: لو السرعة بالساعة والزمن بالدقائق، حوّل الدقائق لساعات."},
+ {id:"avg",t:"المتوسط الحسابي",d:"المجموع = المتوسط × العدد",
+  idea:"لا تحفظ المتوسط، احفظ المجموع. أي سؤال متوسط يتحول لسؤال مجموع.",
+  rules:[["القانون",`${m("المتوسط = المجموع ÷ العدد")}`],["إضافة عدد",`المجموع الجديد = المجموع القديم + العدد الجديد`],["أعداد متتالية",`المتوسط = العدد اللي في النص`]],
+  ex:{q:"متوسط 4 أعداد = 15، أضفنا لها 25. كم المتوسط الجديد؟",a:`المجموع ${m("60 + 25 = 85")}، ÷ 5 = <b>${m("17")}</b>`},
+  trap:"لا تجمع المتوسطات وتقسمها إلا إذا كانت المجموعات بنفس العدد."},
+ {id:"ages",t:"الأعمار",d:"الفرق بين عمرين ما يتغير أبداً",
+  idea:"مرور السنين يضيف لكل شخص نفس العدد، فالفرق ثابت والمجموع يزيد بعدد الأشخاص × السنين.",
+  rules:[["الفرق ثابت","لو أحمد أكبر من أخوه بـ 6، بيظل أكبر بـ 6 طول العمر"],["المجموع بعد n سنة",`المجموع الحالي + ${m("n × عدد الأشخاص")}`],["جرّب الخيارات","في الأعمار عوّض بالخيارات، غالباً أسرع من المعادلة"]],
+  ex:{q:"عمر الأب 4 أضعاف عمر ابنه، ومجموعهما 50. كم عمر الابن؟",a:`${m("x + 4x = 50")} ← x = <b>${m("10")}</b>`},
+  trap:"انتبه لكلمة (قبل) و(بعد): قبل 3 سنوات تطرح من الشخصين."},
+ {id:"geo",t:"الهندسة",d:"الزوايا، المساحات، المحيطات، الحجوم",
+  idea:"الهندسة في القدرات قوانين ثابتة + رسمة. ارسم وكتب المعطيات على الرسمة دايم.",
+  rules:[["مجموع زوايا المثلث",m("180°")],["مجموع زوايا المضلع",m("(n − 2) × 180")],["فيثاغورس",`${m("a² + b² = c²")} وحفظ ${m("3-4-5")} و${m("6-8-10")} و${m("5-12-13")}`],["الدائرة",`المحيط ${m("2πr")}، المساحة ${m("πr²")}`],["المستطيل",`المساحة ${m("ط × ع")}، المحيط ${m("2(ط + ع)")}`],["المكعب",`الحجم ${m("ل³")}`]],
+  ex:{q:"مثلث قائم ضلعاه القائمان 6 و 8، كم الوتر؟",a:`ثلاثي ${m("6-8-10")} = <b>${m("10")}</b>`},
+  trap:"المساحات المظللة: احسب الكل واطرح الأبيض بدل ما تحسب المظلل مباشرة."},
+ {id:"cmp",t:"أسئلة المقارنة",d:"القيمة الأولى ولا الثانية؟",
+  idea:"تقارن بين قيمتين، والخيارات دايم أربعة ثابتة. لو فيها متغير، جرّب أكثر من رقم.",
+  rules:[["الخيارات الأربعة","الأولى أكبر · الثانية أكبر · متساويتان · المعطيات غير كافية"],["الأعداد اللي تجربها",`${m("0")}، ${m("1")}، عدد سالب، كسر مثل ${m("1/2")}، عدد كبير`],["متى (غير كافية)؟","إذا تغيرت النتيجة مع تغيّر الرقم المعوّض"]],
+  ex:{q:`القيمة الأولى: ${m("15%")} من 60 · القيمة الثانية: ${m("60%")} من 15`,a:`الاثنين = ${m("9")} ← <b>متساويتان</b> (النسبة تبادلية)`},
+  trap:"إذا كان x موجب ما يعني إنه أكبر من 1. جرب الكسور قبل ما تحكم."},
+ {id:"pattern",t:"المتتابعات والأنماط والاحتمالات",d:"اكتشف القاعدة واكمل",
+  idea:"شوف الفرق بين كل حدين. لو الفروق نفسها تتزايد، فالقاعدة في الفروق.",
+  rules:[["فرق ثابت",`${m("3, 7, 11, 15")} (+4)`],["ضرب ثابت",`${m("3, 6, 12, 24")} (×2)`],["فروق متزايدة",`${m("2, 6, 12, 20")} (+4 +6 +8)`],["الاحتمال",`${m("المطلوب ÷ الكل")}`],["الدوريات",`أيام الأسبوع: باقي القسمة على ${m("7")}`]],
+  ex:{q:`${m("2, 6, 12, 20, 30, ؟")}`,a:`الفروق ${m("4, 6, 8, 10")} ← الفرق التالي 12 = <b>${m("42")}</b>`},
+  trap:"لا تكتفي بأول فرقين. تأكد إن القاعدة تنطبق على كل الحدود."},
+ {id:"alg",t:"المعادلات والجذور والأسس",d:"عزل المجهول وقوانين الأسس",
+  idea:"اللي تسويه في طرف المعادلة سوّه في الطرف الثاني. وكثير من الأسئلة تبي تعبير مو قيمة x.",
+  rules:[["ضرب الأسس",`${m("aᵐ × aⁿ = aᵐ⁺ⁿ")}`],["قسمة الأسس",`${m("aᵐ ÷ aⁿ = aᵐ⁻ⁿ")}`],["مربعات لازم تحفظها",`من ${m("1²")} إلى ${m("20²")}، و${m("25² = 625")}`],["ق.م.أ و م.م.أ",`${m("ق.م.أ(18, 24) = 6")}، ${m("م.م.أ(4, 6) = 12")}`]],
+  ex:{q:`إذا كان ${m("x/4 = 5")} فإن ${m("2x")} = ؟`,a:`${m("x = 20")} ← ${m("2x")} = <b>${m("40")}</b>`},
+  trap:"اقرأ المطلوب: إذا يبي 2x لا تختار قيمة x."}
+],
+verbal:[
+ {id:"analogy",t:"التناظر اللفظي",d:"علاقة الكلمتين، وابحث عن نفسها",
+  idea:"كوّن جملة تربط الكلمتين في السؤال، وطبّقها على كل خيار بنفس الترتيب. الخيار اللي تنطبق عليه الجملة بالضبط هو الجواب.",
+  rel:[["أداة واستخدامها","قلم : كتابة"],["جزء من كل","إصبع : يد"],["تضاد","كريم : بخيل"],["ترادف","شجاعة : إقدام"],["مكان وساكنه","نحلة : خلية"],["مراحل","بذرة : شجرة"],["حاجة وإشباع","جوع : أكل"],["مهنة ومكان عمل","طبيب : مستشفى"],["سبب ونتيجة","إهمال : رسوب"],["صانع ومادة","نجار : خشب"]],
+  ex:{q:"قلم : كتابة",a:"الجملة: (القلم أداة للكتابة) ← <b>مقص : قص</b>"},
+  trap:"انتبه للترتيب: (يد : إصبع) غير (إصبع : يد). والخيار اللي فيه نفس الموضوع مو شرط يكون الصح."},
+ {id:"complete",t:"إكمال الجمل",d:"اقرأ الجملة كاملة قبل ما تختار",
+  idea:"دوّر على كلمات الربط: (لكن، رغم، إلا أن) تعني تضاد، و(لذلك، فـ، حتى) تعني نتيجة. هذي تحدد اتجاه الفراغ.",
+  rules:[["كلمات التضاد","رغم · لكن · إلا أن · بينما"],["كلمات النتيجة","لذلك · فـ · حتى · لأن"],["فراغين","تأكد إن الكلمتين تناسبان مع بعض، مو كل وحدة لحالها"],["الأمثال والحكم","احفظ الأشهر، تتكرر كثير"]],
+  ex:{q:"رغم أن الامتحان كان ......، إلا أن معظم الطلاب ......",a:"(رغم) تعني تعارض ← <b>صعبًا – نجحوا</b>"},
+  trap:"خيار ممكن تكون كلمته الأولى صح والثانية لا. لازم الاثنين."},
+ {id:"context",t:"الخطأ السياقي",d:"الكلمة اللي تخرّب المعنى",
+  idea:"الجملة فيها كلمة ملوّنة غلط في المعنى، مو في الإملاء ولا النحو. اقرأ الجملة وحدد معناها العام، وشوف أي كلمة تعاكسه.",
+  rules:[["الخطوة 1","افهم المقصود العام للجملة"],["الخطوة 2","جرّب تحط ضد كل كلمة ملوّنة"],["العلامة","الكلمة اللي إذا قلبتها صارت الجملة منطقية هي الخطأ"]],
+  ex:{q:"يُعدّ الماء أساس الحياة، لذلك يجب الإسراف في استهلاكه.",a:"المعنى يدعو للحفاظ ← الخطأ <b>الإسراف</b> وصوابها (الترشيد)"},
+  trap:"الخطأ ما يكون إملائي أو نحوي. ركّز على المعنى فقط."},
+ {id:"reading",t:"استيعاب المقروء",d:"الفكرة الرئيسة، العنوان، والتفاصيل",
+  idea:"اقرأ السؤال قبل النص، بعدين اقرأ النص وأنت تدوّر على الجواب. أغلب الأسئلة: فكرة رئيسة، عنوان، معنى كلمة، عود الضمير، استنتاج.",
+  rules:[["الفكرة الرئيسة","غالباً في أول جملة أو آخر جملة"],["العنوان","أشمل خيار يغطي النص كله، مو تفصيلة منه"],["عود الضمير","ارجع للاسم اللي قبله مباشرة وجرّب تعوّضه"],["الاستنتاج","لا تختار شيء ما ذكره النص ولا يفهم منه"]],
+  ex:{q:"إذا كان الكلام من فضة فالسكوت من ذهب. تدل العبارة على:",a:"<b>فضل الصمت في مواضعه</b>"},
+  trap:"الخيار اللي معلومته صحيحة بس النص ما ذكرها = غلط."},
+ {id:"odd",t:"المفردة الشاذة",d:"ثلاث كلمات يجمعها رابط، وواحدة تختلف",
+  idea:"ابحث عن الرابط بين ثلاث كلمات: نفس النوع، نفس الاستخدام، نفس المعنى، أو نفس المكان. الرابعة هي الشاذة.",
+  rules:[["في المعنى","فرح · سرور · بهجة · حزن"],["في النوع","تفاح · موز · عنب · جزر"],["في الاستخدام","سيف · رمح · خنجر · درع"],["في المكان","الرياض · جدة · الدمام · القاهرة"]],
+  ex:{q:"سكين · منشار · لحم · سيف",a:"ثلاث أدوات قطع ← الشاذة <b>لحم</b>"},
+  trap:"لو لقيت أكثر من رابط، اختر الرابط الأقوى اللي يجمع ثلاثة بالضبط."},
+ {id:"extra",t:"الكلمة الزائدة",d:"الكلمة اللي لو حذفتها ما يتغير المعنى",
+  idea:"الجملة فيها كلمة معناها موجود أصلاً في كلمة ثانية. احذف كل كلمة وشوف هل المعنى نقص.",
+  rules:[["تكرار المعنى","(صعد إلى أعلى) ← الصعود أصلاً للأعلى"],["رجع راجعاً","الفعل يغني عن الحال"],["الاختبار","احذف الكلمة: إذا ما نقص المعنى فهي الزائدة"]],
+  ex:{q:"صعد الرجل إلى أعلى السطح.",a:"<b>أعلى</b> زائدة، لأن الصعود ما يكون إلا للأعلى"},
+  trap:"كلمات التوكيد مو دايم زائدة، المقصود الكلمة اللي معناها مكرر."}
+]};
+
+/* ---------- QUESTIONS (تدريب) ---------- */
+const Q=[
+// arith
+{s:"quant",t:"arith",q:`${m("25 × 16")} = ؟`,o:["350","400","425","450"],a:1,e:`${m("25×4 = 100")} و ${m("16 = 4×4")} ← ${m("100×4 = 400")}`},
+{s:"quant",t:"arith",q:`${m("999 + 99 + 9")} = ؟`,o:["1097","1107","1117","1007"],a:1,e:`${m("1000+100+10 − 3 = 1107")}`},
+{s:"quant",t:"arith",q:`${m("0.25 × 48")} = ؟`,o:["10","12","14","16"],a:1,e:`${m("0.25")} = ربع ← ${m("48 ÷ 4 = 12")}`},
+{s:"quant",t:"arith",q:`${m("37 × 99")} = ؟`,o:["3663","3636","3763","3563"],a:0,e:`${m("37×100 − 37 = 3700 − 37 = 3663")}`},
+{s:"quant",t:"arith",q:`${m("10%")} من ${m("10%")} من ${m("500")} = ؟`,o:["50","5","0.5","10"],a:1,e:`${m("10%")} من 500 = 50، و${m("10%")} من 50 = ${m("5")}`},
+{s:"quant",t:"arith",q:`${m("48 × 5")} = ؟`,o:["220","240","250","260"],a:1,e:`${m("48 × 10 ÷ 2 = 240")}`},
+// frac
+{s:"quant",t:"frac",q:`${m("3/4 − 1/6")} = ؟`,o:[m("7/12"),m("1/2"),m("2/3"),m("5/12")],a:0,e:`${m("9/12 − 2/12 = 7/12")}`},
+{s:"quant",t:"frac",q:"أي الكسور التالية هو الأكبر؟",o:[m("5/8"),m("3/5"),m("7/12"),m("2/3")],a:3,e:`بالتقريب: ${m("0.625, 0.6, 0.583, 0.667")} ← الأكبر ${m("2/3")}`},
+{s:"quant",t:"frac",q:`${m("1/2 ÷ 1/4")} = ؟`,o:[m("1/8"),m("2"),m("1/2"),m("4")],a:1,e:`${m("1/2 × 4/1 = 2")}`},
+{s:"quant",t:"frac",q:`${m("0.3 + 0.07")} = ؟`,o:["0.10","0.37","0.307","3.7"],a:1,e:`رتّب المنازل: ${m("0.30 + 0.07 = 0.37")}`},
+{s:"quant",t:"frac",q:`${m("0.125")} يساوي:`,o:[m("1/4"),m("1/5"),m("1/8"),m("1/6")],a:2,e:`${m("1 ÷ 8 = 0.125")}`},
+// pct
+{s:"quant",t:"pct",q:`${m("20%")} من ${m("350")} = ؟`,o:["60","70","75","80"],a:1,e:`${m("10%")} = 35 ← ${m("20%")} = ${m("70")}`},
+{s:"quant",t:"pct",q:"جوال سعره 200 ريال، عليه خصم 15%. كم سعره بعد الخصم؟",o:["185","175","170","165"],a:2,e:`الخصم ${m("30")} ← ${m("200 − 30 = 170")}`},
+{s:"quant",t:"pct",q:"زاد عدد الطلاب من 80 إلى 100. كم نسبة الزيادة؟",o:["20%","25%","80%","15%"],a:1,e:`${m("20 ÷ 80 = 0.25 = 25%")}، نقسم على الأصلي`},
+{s:"quant",t:"pct",q:"زاد سعر سلعة 10% ثم نقص 10%. السعر النهائي مقارنةً بالأصلي:",o:["نفسه","أقل بـ 1%","أكثر بـ 1%","أقل بـ 2%"],a:1,e:`افرض 100 ← 110 ← ${m("110 − 11 = 99")} أي نقص ${m("1%")}`},
+{s:"quant",t:"pct",q:"اشترى تاجر سلعة بـ 120 ريال وباعها بـ 150 ريال. نسبة الربح:",o:["20%","25%","30%","15%"],a:1,e:`الربح 30 على التكلفة 120 = ${m("25%")}`},
+// ratio
+{s:"quant",t:"ratio",q:"نسبة الأولاد إلى البنات 3 : 5، ومجموعهم 40. كم عدد البنات؟",o:["15","20","25","30"],a:2,e:`الأجزاء ${m("8")}، الجزء = 5 ← البنات ${m("5×5 = 25")}`},
+{s:"quant",t:"ratio",q:"4 عمال يخلصون عمل في 12 يوم. كم يوم يحتاج 6 عمال؟",o:["18","9","8","6"],a:2,e:`عكسي: ${m("4×12 = 48 ÷ 6 = 8")}`},
+{s:"quant",t:"ratio",q:"سعر 3 كيلو 45 ريال. كم سعر 7 كيلو؟",o:["95","100","105","115"],a:2,e:`الكيلو 15 ← ${m("7 × 15 = 105")}`},
+{s:"quant",t:"ratio",q:"خريطة مقياسها 1 سم : 5 كم. المسافة على الخريطة 8 سم، كم المسافة الحقيقية؟",o:["13 كم","40 كم","45 كم","35 كم"],a:1,e:`${m("8 × 5 = 40")} كم`},
+// speed
+{s:"quant",t:"speed",q:"سيارة سرعتها 90 كم/س، كم كيلو تقطع في ساعتين ونص؟",o:["200","215","225","250"],a:2,e:`${m("90 × 2.5 = 225")}`},
+{s:"quant",t:"speed",q:"قطع مسافر 300 كم بسرعة 75 كم/س. كم ساعة استغرق؟",o:["3","3.5","4","5"],a:2,e:`${m("300 ÷ 75 = 4")}`},
+{s:"quant",t:"speed",q:"قطع 120 كم في ساعة ونص. كم سرعته؟",o:["60","80","90","100"],a:1,e:`${m("120 ÷ 1.5 = 80")} كم/س`},
+{s:"quant",t:"speed",q:"يمشي شخص بسرعة 6 كم/س. كم كيلو يقطع في 20 دقيقة؟",o:["1","2","3","1.5"],a:1,e:`20 دقيقة = ${m("1/3")} ساعة ← ${m("6 × 1/3 = 2")}`},
+// avg
+{s:"quant",t:"avg",q:"متوسط 4 أعداد = 15، أضفنا لها العدد 25. كم المتوسط الجديد؟",o:["16","17","18","20"],a:1,e:`${m("60 + 25 = 85 ÷ 5 = 17")}`},
+{s:"quant",t:"avg",q:`متوسط الأعداد ${m("6, 8, 10, x")} يساوي 9. قيمة x:`,o:["9","10","11","12"],a:3,e:`المجموع ${m("36")} ← ${m("36 − 24 = 12")}`},
+{s:"quant",t:"avg",q:"متوسط 5 أعداد متتالية = 20. ما أكبرها؟",o:["20","21","22","24"],a:2,e:`المتوسط هو الأوسط ← ${m("18,19,20,21,22")}`},
+// ages
+{s:"quant",t:"ages",q:"عمر الأب 4 أضعاف عمر ابنه، ومجموع عمريهما 50. كم عمر الابن؟",o:["8","10","12","40"],a:1,e:`${m("5x = 50")} ← ${m("x = 10")}`},
+{s:"quant",t:"ages",q:"عمر أحمد 15 وأخوه 9. بعد كم سنة يصير مجموع عمريهما 40؟",o:["6","7","8","10"],a:2,e:`المجموع الآن 24، يزيد 2 كل سنة ← ${m("16 ÷ 2 = 8")}`},
+{s:"quant",t:"ages",q:"سارة أكبر من أختها بـ 5 سنوات. بعد 10 سنوات كم يكون الفرق؟",o:["5","10","15","0"],a:0,e:"الفرق بين عمرين ثابت دايم = 5"},
+// geo
+{s:"quant",t:"geo",q:"مربع محيطه 36 سم. كم مساحته؟",o:["36","72","81","144"],a:2,e:`الضلع ${m("9")} ← ${m("9² = 81")}`},
+{s:"quant",t:"geo",q:"مثلث زاويتان فيه 50° و 70°. كم الزاوية الثالثة؟",o:["50°","60°","70°","80°"],a:1,e:`${m("180 − 120 = 60")}`},
+{s:"quant",t:"geo",q:`دائرة نصف قطرها 7، كم محيطها؟ (${m("π = 22/7")})`,o:["22","44","49","154"],a:1,e:`${m("2 × 22/7 × 7 = 44")}`},
+{s:"quant",t:"geo",q:"مثلث قائم ضلعاه القائمان 6 و 8. طول الوتر:",o:["9","10","12","14"],a:1,e:`${m("36 + 64 = 100")} ← ${m("10")}`},
+{s:"quant",t:"geo",q:"مجموع زوايا الشكل السداسي الداخلية:",o:["540°","620°","720°","1080°"],a:2,e:`${m("(6 − 2) × 180 = 720")}`},
+{s:"quant",t:"geo",q:"مكعب طول حرفه 3 سم. حجمه:",o:["9","18","27","54"],a:2,e:`${m("3³ = 27")}`},
+{s:"quant",t:"geo",q:"مستطيل طوله 8 وعرضه 5. محيطه:",o:["13","26","40","30"],a:1,e:`${m("2 × (8 + 5) = 26")}`},
+// cmp
+{s:"quant",t:"cmp",q:`<span class="ask">قارن بين القيمتين</span>الأولى: ${m("3/7")} · الثانية: ${m("0.4")}`,o:CMP,a:0,e:`${m("3/7 ≈ 0.43")} أكبر من ${m("0.4")}`},
+{s:"quant",t:"cmp",q:`<span class="ask">قارن بين القيمتين</span>الأولى: ${m("2⁵")} · الثانية: ${m("5²")}`,o:CMP,a:0,e:`${m("32 > 25")}`},
+{s:"quant",t:"cmp",q:`<span class="ask">إذا كان ${m("x > 0")}، قارن</span>الأولى: ${m("x")} · الثانية: ${m("x²")}`,o:CMP,a:3,e:`لو ${m("x = 2")} الثانية أكبر، ولو ${m("x = 1/2")} الأولى أكبر ← غير كافية`},
+{s:"quant",t:"cmp",q:`<span class="ask">قارن بين القيمتين</span>الأولى: ${m("15%")} من 60 · الثانية: ${m("60%")} من 15`,o:CMP,a:2,e:`الاثنين = ${m("9")}`},
+{s:"quant",t:"cmp",q:`<span class="ask">قارن بين القيمتين</span>الأولى: ${m("√49 + √16")} · الثانية: ${m("√65")}`,o:CMP,a:0,e:`${m("7 + 4 = 11")}، و${m("√65")} قريب من 8`},
+// pattern
+{s:"quant",t:"pattern",q:`ما العدد التالي: ${m("2, 6, 12, 20, 30, ?")}`,o:["40","42","44","36"],a:1,e:`الفروق تزيد 2: ${m("+12 ← 42")}`},
+{s:"quant",t:"pattern",q:`ما العدد التالي: ${m("3, 6, 12, 24, ?")}`,o:["36","48","30","42"],a:1,e:"كل حد × 2"},
+{s:"quant",t:"pattern",q:`ما العدد التالي: ${m("1, 4, 9, 16, ?")}`,o:["20","24","25","32"],a:2,e:`مربعات: ${m("5² = 25")}`},
+{s:"quant",t:"pattern",q:"رمينا حجر نرد مرة واحدة. احتمال ظهور عدد زوجي:",o:[m("1/6"),m("1/3"),m("1/2"),m("2/3")],a:2,e:`الزوجي ${m("2, 4, 6")} ← ${m("3/6 = 1/2")}`},
+{s:"quant",t:"pattern",q:"كيس فيه 3 كرات حمراء و 5 زرقاء. احتمال سحب كرة حمراء:",o:[m("3/5"),m("3/8"),m("5/8"),m("1/3")],a:1,e:`${m("3 ÷ 8")}`},
+{s:"quant",t:"pattern",q:"إذا كان اليوم الأحد، فبعد 100 يوم يكون:",o:["الاثنين","الثلاثاء","الأربعاء","الأحد"],a:1,e:`${m("100 ÷ 7")} الباقي 2 ← بعد الأحد بيومين = الثلاثاء`},
+// alg
+{s:"quant",t:"alg",q:`إذا كان ${m("3x + 7 = 25")} فإن x =`,o:["5","6","7","8"],a:1,e:`${m("3x = 18")} ← ${m("x = 6")}`},
+{s:"quant",t:"alg",q:`إذا كان ${m("x/4 = 5")} فإن ${m("2x")} =`,o:["10","20","40","45"],a:2,e:`${m("x = 20")} ← ${m("2x = 40")}`},
+{s:"quant",t:"alg",q:`${m("√144 + √25")} = ؟`,o:["13","17","19","169"],a:1,e:`${m("12 + 5 = 17")}`},
+{s:"quant",t:"alg",q:`${m("2³ × 2⁴")} = ؟`,o:["64","128","256","48"],a:1,e:`${m("2⁷ = 128")}`},
+{s:"quant",t:"alg",q:"القاسم المشترك الأكبر للعددين 18 و 24:",o:["3","6","8","12"],a:1,e:`عوامل مشتركة: ${m("1, 2, 3, 6")} ← الأكبر 6`},
+{s:"quant",t:"alg",q:"المضاعف المشترك الأصغر للعددين 4 و 6:",o:["12","24","10","2"],a:0,e:`مضاعفات 6: ${m("6, 12")} و 12 تقبل القسمة على 4`},
+// VERBAL analogy
+{s:"verbal",t:"analogy",q:`<span class="ask">اختر الزوج المشابه للعلاقة</span>قلم : كتابة`,o:["كتاب : مكتبة","مقص : قص","ماء : عطش","شجرة : ورقة"],a:1,e:"أداة ووظيفتها: القلم للكتابة والمقص للقص"},
+{s:"verbal",t:"analogy",q:`<span class="ask">اختر الزوج المشابه للعلاقة</span>نحلة : خلية`,o:["أسد : شجاعة","حصان : سرج","طائر : عش","قطة : مواء"],a:2,e:"كائن ومسكنه"},
+{s:"verbal",t:"analogy",q:`<span class="ask">اختر الزوج المشابه للعلاقة</span>طويل : قصير`,o:["سريع : عاجل","كريم : بخيل","جميل : وسيم","قوي : متين"],a:1,e:"تضاد، وباقي الخيارات ترادف"},
+{s:"verbal",t:"analogy",q:`<span class="ask">اختر الزوج المشابه للعلاقة</span>بذرة : شجرة`,o:["ورق : كتاب","سحاب : مطر","طفل : رجل","خبز : فرن"],a:2,e:"مرحلة أولى ومرحلة نهائية لنفس الكائن"},
+{s:"verbal",t:"analogy",q:`<span class="ask">اختر الزوج المشابه للعلاقة</span>طبيب : مستشفى`,o:["نجار : منشار","معلم : مدرسة","كاتب : قلم","مزارع : قمح"],a:1,e:"صاحب المهنة ومكان عمله"},
+{s:"verbal",t:"analogy",q:`<span class="ask">اختر الزوج المشابه للعلاقة</span>جوع : أكل`,o:["نوم : سرير","عطش : شرب","برد : ثلج","تعب : عمل"],a:1,e:"حاجة وما يشبعها"},
+{s:"verbal",t:"analogy",q:`<span class="ask">اختر الزوج المشابه للعلاقة</span>إصبع : يد`,o:["عين : رؤية","غصن : شجرة","حذاء : قدم","قلم : ورقة"],a:1,e:"جزء من كل"},
+{s:"verbal",t:"analogy",q:`<span class="ask">اختر الزوج المشابه للعلاقة</span>حداد : حديد`,o:["طبيب : مريض","خياط : إبرة","نجار : خشب","بناء : مبنى"],a:2,e:"الصانع والمادة اللي يشتغل عليها"},
+// complete
+{s:"verbal",t:"complete",q:"من جدَّ ......، ومن زرع ......",o:["نجح – أكل","وجد – حصد","تعب – سقى","فاز – نبت"],a:1,e:"المثل المعروف: من جد وجد، ومن زرع حصد"},
+{s:"verbal",t:"complete",q:"العلم في الصغر كالنقش على ......",o:["الرمل","الماء","الحجر","الورق"],a:2,e:"النقش على الحجر يثبت ولا يزول"},
+{s:"verbal",t:"complete",q:"رغم أن الامتحان كان ......، إلا أن معظم الطلاب ......",o:["سهلًا – نجحوا","صعبًا – رسبوا","صعبًا – نجحوا","قصيرًا – تأخروا"],a:2,e:"(رغم... إلا أن) تعني نتيجة غير متوقعة: صعب لكن نجحوا"},
+{s:"verbal",t:"complete",q:"الصبر مفتاح ......",o:["الفرج","الباب","الغضب","الكلام"],a:0,e:"الصبر مفتاح الفرج"},
+{s:"verbal",t:"complete",q:"كلما زادت ثقافة الإنسان ...... نظرته إلى الأمور.",o:["ضاقت","اتسعت","تجمدت","قصرت"],a:1,e:"زيادة الثقافة تؤدي لاتساع النظرة (علاقة طردية)"},
+// context
+{s:"verbal",t:"context",q:`<span class="ask">حدد الكلمة اللي تخالف المعنى</span>يُعدّ الماء أساس الحياة، لذلك يجب الإسراف في استهلاكه.`,o:["الماء","الحياة","الإسراف","استهلاكه"],a:2,e:"الصواب: الترشيد في استهلاكه"},
+{s:"verbal",t:"context",q:`<span class="ask">حدد الكلمة اللي تخالف المعنى</span>اجتهد الطالب طوال العام فكانت نتيجته مخيّبة لآمال والديه اللذين فرحا بها.`,o:["اجتهد","مخيّبة","والديه","فرحا"],a:1,e:"الاجتهاد والفرح يدلان على نتيجة مشرّفة، مو مخيّبة"},
+{s:"verbal",t:"context",q:`<span class="ask">حدد الكلمة اللي تخالف المعنى</span>تشرق الشمس من الغرب كل صباح فتبدد ظلام الليل.`,o:["تشرق","الغرب","صباح","ظلام"],a:1,e:"الشمس تشرق من الشرق"},
+{s:"verbal",t:"context",q:`<span class="ask">حدد الكلمة اللي تخالف المعنى</span>القراءة تضيّق مدارك الإنسان وتثري لغته.`,o:["القراءة","تضيّق","مدارك","تثري"],a:1,e:"الصواب: توسّع مدارك الإنسان"},
+{s:"verbal",t:"context",q:`<span class="ask">حدد الكلمة اللي تخالف المعنى</span>استخدم الطبيب المنشار ليقيس حرارة المريض.`,o:["الطبيب","المنشار","حرارة","المريض"],a:1,e:"الحرارة تقاس بميزان الحرارة"},
+// odd
+{s:"verbal",t:"odd",q:`<span class="ask">أي الكلمات مختلفة؟</span>`,o:["تفاح","موز","جزر","عنب"],a:2,e:"الجزر خضار والباقي فواكه"},
+{s:"verbal",t:"odd",q:`<span class="ask">أي الكلمات مختلفة؟</span>`,o:["مثلث","مربع","دائرة","مكعب"],a:3,e:"المكعب مجسّم ثلاثي الأبعاد والباقي أشكال مستوية"},
+{s:"verbal",t:"odd",q:`<span class="ask">أي الكلمات مختلفة؟</span>`,o:["الرياض","جدة","القاهرة","الدمام"],a:2,e:"القاهرة مو مدينة سعودية"},
+{s:"verbal",t:"odd",q:`<span class="ask">أي الكلمات مختلفة؟</span>`,o:["سيف","رمح","درع","خنجر"],a:2,e:"الدرع للحماية والباقي أسلحة هجوم"},
+{s:"verbal",t:"odd",q:`<span class="ask">أي الكلمات مختلفة؟</span>`,o:["فرح","سرور","بهجة","حزن"],a:3,e:"حزن عكس الثلاث"},
+{s:"verbal",t:"odd",q:`<span class="ask">أي الكلمات مختلفة؟</span>`,o:["مطرقة","منشار","مسمار","مفك"],a:2,e:"المسمار يُستخدم عليه، والباقي أدوات تستخدم"},
+// reading
+{s:"verbal",t:"reading",p:"النحل من أكثر الكائنات تنظيمًا؛ فالخلية الواحدة قد تضم عشرات الآلاف من الشغالات، لكلٍّ منها دور محدد: فمنها من تنظف الخلية، ومنها من تحرسها، ومنها من تخرج لجمع الرحيق. ولا يقتصر نفع النحل على العسل، إذ يسهم في تلقيح نسبة كبيرة من المحاصيل التي يعتمد عليها الإنسان في غذائه، ولهذا يحذّر العلماء من أن تناقص أعداده يهدد الأمن الغذائي.",q:"الفكرة الرئيسة للنص:",o:["طريقة صنع العسل","تنظيم مجتمع النحل وأهميته للإنسان","أنواع المحاصيل الزراعية","خطورة لسع النحل"],a:1,e:"النص يتكلم عن التنظيم أولاً ثم النفع"},
+{s:"verbal",t:"reading",p:"النحل من أكثر الكائنات تنظيمًا؛ فالخلية الواحدة قد تضم عشرات الآلاف من الشغالات، لكلٍّ منها دور محدد: فمنها من تنظف الخلية، ومنها من تحرسها، ومنها من تخرج لجمع الرحيق. ولا يقتصر نفع النحل على العسل، إذ يسهم في تلقيح نسبة كبيرة من المحاصيل التي يعتمد عليها الإنسان في غذائه، ولهذا يحذّر العلماء من أن تناقص أعداده يهدد الأمن الغذائي.",q:"أنسب عنوان للنص:",o:["العسل غذاء ودواء","النحل: نظام دقيق ونفع واسع","حراسة الخلية","المحاصيل الزراعية"],a:1,e:"العنوان الأشمل يغطي التنظيم والنفع معاً"},
+{s:"verbal",t:"reading",p:"النحل من أكثر الكائنات تنظيمًا؛ فالخلية الواحدة قد تضم عشرات الآلاف من الشغالات، لكلٍّ منها دور محدد: فمنها من تنظف الخلية، ومنها من تحرسها، ومنها من تخرج لجمع الرحيق. ولا يقتصر نفع النحل على العسل، إذ يسهم في تلقيح نسبة كبيرة من المحاصيل التي يعتمد عليها الإنسان في غذائه، ولهذا يحذّر العلماء من أن تناقص أعداده يهدد الأمن الغذائي.",q:"لماذا يحذّر العلماء حسب النص؟",o:["لأن النحل يلسع الإنسان","لأن تناقص أعداد النحل يهدد الأمن الغذائي","لأن العسل غالي","لأن الخلية تحتاج حراسة"],a:1,e:"مذكور صراحة في آخر جملة"},
+{s:"verbal",t:"reading",p:"النحل من أكثر الكائنات تنظيمًا؛ فالخلية الواحدة قد تضم عشرات الآلاف من الشغالات، لكلٍّ منها دور محدد: فمنها من تنظف الخلية، ومنها من تحرسها، ومنها من تخرج لجمع الرحيق. ولا يقتصر نفع النحل على العسل، إذ يسهم في تلقيح نسبة كبيرة من المحاصيل التي يعتمد عليها الإنسان في غذائه، ولهذا يحذّر العلماء من أن تناقص أعداده يهدد الأمن الغذائي.",q:"الضمير في كلمة (أعداده) يعود على:",o:["الإنسان","الغذاء","النحل","العسل"],a:2,e:"تناقص أعداد النحل"},
+{s:"verbal",t:"reading",q:"«إذا كان الكلام من فضة فالسكوت من ذهب». تدل العبارة على:",o:["أهمية الذهب","فضل الصمت في مواضعه","كثرة الكلام مفيدة","قيمة المعادن"],a:1,e:"المقصود إن الصمت أحياناً أثمن من الكلام"},
+// extra
+{s:"verbal",t:"extra",q:`<span class="ask">ما الكلمة الزائدة؟</span>صعد الرجل إلى أعلى السطح.`,o:["صعد","الرجل","أعلى","السطح"],a:2,e:"الصعود يكون للأعلى أصلاً"},
+{s:"verbal",t:"extra",q:`<span class="ask">ما الكلمة الزائدة؟</span>عاد الطالب إلى البيت راجعًا بعد انتهاء الدوام.`,o:["عاد","البيت","راجعًا","الدوام"],a:2,e:"(عاد) تغني عن (راجعًا)"},
+{s:"verbal",t:"extra",q:`<span class="ask">ما الكلمة الزائدة؟</span>نزل المطر من السماء فارتوت الأرض.`,o:["نزل","من السماء","ارتوت","الأرض"],a:1,e:"المطر لا ينزل إلا من السماء"}
+];
+Q.forEach((q,i)=>q.id=i);
+
+const QUOTES=["المراجعة اليومية القصيرة أقوى من سهرة قبل الاختبار","كل غلطة اليوم = سؤال ما بتغلط فيه يوم الاختبار","20 سؤال باليوم = 600 سؤال بالشهر","ما تحتاج تكون عبقري، تحتاج تكون مستمر","السؤال اللي تغلط فيه هو أكثر سؤال تتعلم منه","الدرجة العالية تنبني سؤال سؤال"];
+const RANKS=[[0,"مبتدئ"],[100,"متحمّس"],[300,"مجتهد"],[600,"متمكّن"],[1000,"محترف"],[1600,"وحش القدرات"]];
+const PRAISE=["ممتاز!","كفو!","صح عليك!","بطل!","تمام التمام!","ما شاء الله!"];
+const CHEER=["ولا يهمك، اقرأ الحل وكمّل","قريب! شوف الطريقة","الحين عرفتها، ما بتغلط فيها مرة ثانية"];
+
+/* ---------- STATE ---------- */
+const today=()=>new Date().toISOString().slice(0,10);
+let S={xp:0,total:0,correct:0,day:today(),todayN:0,streak:0,last:null,topic:{},wrong:[]};
+try{const r=localStorage.getItem("qdr_state");if(r)S=Object.assign(S,JSON.parse(r))}catch(e){}
+if(!Array.isArray(S.wrong))S.wrong=[];
+if(S.day!==today()){S.day=today();S.todayN=0}
+const save=()=>{try{localStorage.setItem("qdr_state",JSON.stringify(S))}catch(e){};queueCloud()};
+const $=s=>document.querySelector(s);
+
+function rankOf(x){let r=RANKS[0],n=null;for(let i=0;i<RANKS.length;i++){if(x>=RANKS[i][0]){r=RANKS[i];n=RANKS[i+1]||null}}return{r,n}}
+function renderStats(){
+  $("#xpTop").textContent=S.xp;$("#xpN").textContent=S.xp;$("#totalN").textContent=S.total;
+  $("#todayN").textContent=S.todayN;$("#streakN").textContent=S.streak;
+  $("#accN").textContent=S.total?Math.round(S.correct/S.total*100)+"%":"–";
+  const f=Math.min(S.todayN/20,1);$("#ringArc").setAttribute("stroke-dashoffset",(314.16*(1-f)).toFixed(1));
+  const {r,n}=rankOf(S.xp);$("#rankName").textContent=r[1];
+  if(n){$("#rankNext").textContent=`باقي ${n[0]-S.xp} نقطة على «${n[1]}»`;$("#rankBar").style.width=((S.xp-r[0])/(n[0]-r[0])*100)+"%"}
+  else{$("#rankNext").textContent="وصلت أعلى مستوى";$("#rankBar").style.width="100%"}
+  renderQuick();
+}
+function allTopics(){return [...TOPICS.quant.map(t=>({...t,s:"quant"})),...TOPICS.verbal.map(t=>({...t,s:"verbal"}))]}
+function renderQuick(){
+  $("#quick").innerHTML=allTopics().map(t=>{const st=S.topic[t.id]||{c:0,n:0};const cnt=Q.filter(q=>q.t===t.id).length;const p=Math.min(st.c/cnt,1)*100;
+    return `<button class="qchip" data-topic="${t.id}" data-s="${t.s}"><span class="s">${t.s==="quant"?"كمي":"لفظي"} · ${cnt} سؤال</span><span class="t">${t.t}</span><span class="pb"><i style="width:${p}%"></i></span></button>`}).join("");
+}
+$("#quick").addEventListener("click",e=>{const b=e.target.closest(".qchip");if(!b)return;startQuick(b.dataset.s,b.dataset.topic)});
+
+/* ---------- LEARN ---------- */
+let learnSec="quant";
+function renderLearn(){
+  $("#topics").innerHTML=TOPICS[learnSec].map((t,i)=>{
+    const rules=t.rules?`<div><h4>القوانين والخطوات</h4><div class="rules">${t.rules.map(r=>`<div class="rule"><b>${r[0]}</b>${r[1]}</div>`).join("")}</div></div>`:"";
+    const rel=t.rel?`<div><h4>أشهر العلاقات</h4><div class="tableWrap"><table class="rel"><thead><tr><th>العلاقة</th><th>مثال</th></tr></thead><tbody>${t.rel.map(r=>`<tr><td>${r[0]}</td><td>${r[1]}</td></tr>`).join("")}</tbody></table></div></div>`:"";
+    const n=Q.filter(q=>q.t===t.id).length;
+    return `<details class="topic"><summary><span class="tnum">${i+1}</span><span class="ttl"><h3>${t.t}</h3><p>${t.d}</p></span><svg class="chev" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></summary>
+    <div class="tbody"><div><h4>الفكرة</h4>${t.idea}</div>${rules}${rel}
+    <div class="example"><h4>مثال محلول</h4><div class="q">${t.ex.q}</div><div class="a">${t.ex.a}</div></div>
+    <div class="trap"><b>انتبه: </b>${t.trap}</div>
+    <div class="tactions"><button class="btn" data-train="${t.id}" data-s="${learnSec}">تدرّب على ${t.t} (${n})</button></div></div></details>`}).join("");
+}
+document.querySelectorAll("[data-sec]").forEach(b=>b.addEventListener("click",()=>{learnSec=b.dataset.sec;document.querySelectorAll("[data-sec]").forEach(x=>x.setAttribute("aria-pressed",x===b));renderLearn()}));
+$("#topics").addEventListener("click",e=>{const b=e.target.closest("[data-train]");if(b)startQuick(b.dataset.s,b.dataset.train)});
+
+/* ---------- PRACTICE ---------- */
+let pSec="mix",pCount=10;
+function segBind(id,cb){document.querySelectorAll(`#${id} button`).forEach(b=>b.addEventListener("click",()=>{document.querySelectorAll(`#${id} button`).forEach(x=>x.setAttribute("aria-pressed",x===b));cb(b.dataset.v)}))}
+segBind("pSec",v=>{pSec=v;fillTopics()});
+segBind("pCount",v=>{pCount=+v;poolInfo()});
+function fillTopics(sel){
+  const ts=allTopics().filter(t=>pSec==="mix"||t.s===pSec);
+  $("#pTopic").innerHTML=`<option value="all">كل المواضيع</option>`+ts.map(t=>`<option value="${t.id}">${t.t}</option>`).join("");
+  if(sel)$("#pTopic").value=sel;poolInfo();
+}
+function pool(){const tp=$("#pTopic").value;return Q.filter(q=>(pSec==="mix"||q.s===pSec)&&(tp==="all"||q.t===tp))}
+function poolInfo(){const n=pool().length;$("#poolInfo").textContent=`متاح ${n} سؤال`+(n<pCount?`، بتحل ${n}`:"")}
+$("#pTopic").addEventListener("change",poolInfo);
+const shuffle=a=>{a=[...a];for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a};
+
+let R=null;
+function startQuick(s,topic){
+  pSec=s;document.querySelectorAll("#pSec button").forEach(x=>x.setAttribute("aria-pressed",x.dataset.v===s));
+  fillTopics(topic);go("practice");startRound(pool());
+}
+$("#startBtn").addEventListener("click",()=>startRound(pool()));
+function startRound(list){
+  const qs=shuffle(list).slice(0,pCount);
+  // shuffle options for non-comparison questions
+  R={qs:qs.map(q=>{if(q.t==="cmp")return{...q,ord:[0,1,2,3]};return{...q,ord:shuffle([0,1,2,3])}}),i:0,res:[],run:0,xp:0};
+  $("#setup").hidden=true;$("#quiz").hidden=false;showQ();
+}
+function showQ(){
+  const q=R.qs[R.i],n=R.qs.length;const tn=allTopics().find(t=>t.id===q.t).t;
+  $("#quiz").innerHTML=`<div class="qmeta"><span>سؤال <b class="m">${R.i+1}</b> من <b class="m">${n}</b></span><span class="tag">${tn}</span></div>
+  <div class="progress"><i style="width:${R.i/n*100}%"></i></div>
+  ${q.p?`<div class="passage">${q.p}</div>`:""}
+  <div class="stem">${q.q}</div>
+  <div class="opts">${q.ord.map((oi,k)=>`<button class="opt" data-oi="${oi}"><span class="b">${L[k]}</span><span>${q.o[oi]}</span></button>`).join("")}</div>
+  <div id="exp"></div>
+  <div class="qfoot"><span class="streakline" id="runLine">${R.run>=2?`🔥 ${R.run} صح ورا بعض`:""}</span><span></span></div>`;
+  $("#quiz").querySelectorAll(".opt").forEach(b=>b.addEventListener("click",()=>answer(+b.dataset.oi)));
+  $("#quiz").scrollIntoView({block:"start",behavior:"smooth"});
+}
+function answer(oi){
+  const q=R.qs[R.i];const ok=oi===q.a;
+  $("#quiz").querySelectorAll(".opt").forEach(b=>{b.disabled=true;const v=+b.dataset.oi;if(v===q.a)b.classList.add("ok");else if(v===oi)b.classList.add("bad")});
+  let gain=0;
+  if(ok){R.run++;gain=10;if(R.run%5===0){gain+=20;toast("خمس صح ورا بعض! +20 نقطة")}}else R.run=0;
+  R.xp+=gain;R.res.push({q,ok});
+  S.xp+=gain;S.total++;if(ok)S.correct++;
+  if(S.day!==today()){S.day=today();S.todayN=0}
+  S.todayN++;
+  const t=today();if(S.last!==t){const y=new Date(Date.now()-864e5).toISOString().slice(0,10);S.streak=(S.last===y)?S.streak+1:1;S.last=t}
+  const st=S.topic[q.t]||{c:0,n:0};st.n++;if(ok)st.c++;S.topic[q.t]=st;
+  S.wrong=S.wrong.filter(x=>x!==q.id);if(!ok){S.wrong.push(q.id);if(S.wrong.length>60)S.wrong.shift()}
+  if(S.todayN===20)toast("خلّصت هدف اليوم! 🎯");
+  save();renderStatsLite();
+  const msg=ok?PRAISE[Math.floor(Math.random()*PRAISE.length)]+` ${m("+"+gain)}`:CHEER[Math.floor(Math.random()*CHEER.length)];
+  $("#exp").innerHTML=`<div class="explain ${ok?"ok":"bad"}"><span class="v">${msg}</span>${q.e}</div>`;
+  $("#runLine").textContent=R.run>=2?`🔥 ${R.run} صح ورا بعض`:"";
+  const last=R.i===R.qs.length-1;
+  const foot=$("#quiz .qfoot span:last-child");foot.innerHTML=`<button class="btn" id="nextBtn">${last?"شوف النتيجة":"السؤال التالي"}</button>`;
+  $("#nextBtn").addEventListener("click",()=>{if(last)showResult();else{R.i++;showQ()}});
+  $("#nextBtn").focus({preventScroll:true});
+}
+function renderStatsLite(){$("#xpTop").textContent=S.xp}
+function showResult(){
+  const c=R.res.filter(r=>r.ok).length,n=R.res.length,p=Math.round(c/n*100);
+  const msg=p===100?"علامة كاملة! أنت جاهز":p>=80?"أداء قوي، كمّل بنفس النفس":p>=50?"بداية زينة، راجع الأخطاء وارجع":"ولا يهمك، اقرأ الشرح وجرّب مرة ثانية";
+  const wrong=R.res.filter(r=>!r.ok).map(r=>r.q);
+  $("#quiz").innerHTML=`<div class="result"><div class="score m">${c}/${n}</div><h3>${msg}</h3>
+  <div class="sheet">${R.res.map((r,i)=>`<i class="${r.ok?"ok":"bad"}">${i+1}</i>`).join("")}</div>
+  <div class="streakline">كسبت <b class="m">${R.xp}</b> نقطة في هذي الجولة</div>
+  <div class="cta" style="justify-content:center">${wrong.length?`<button class="btn hlb" id="retryW">أعد الأسئلة اللي غلطت فيها (${wrong.length})</button>`:""}<button class="btn" id="again">جولة جديدة</button><button class="btn ghost" id="toSetup">غيّر الموضوع</button></div></div>`;
+  if(wrong.length)$("#retryW").addEventListener("click",()=>{const k=pCount;pCount=wrong.length;startRound(wrong);pCount=k});
+  $("#again").addEventListener("click",()=>startRound(pool()));
+  $("#toSetup").addEventListener("click",()=>{$("#quiz").hidden=true;$("#setup").hidden=false});
+  if(p>=80)confetti();
+  renderStats();
+}
+
+/* ---------- toast + confetti ---------- */
+let tt;function toast(s){const t=$("#toast");t.textContent=s;t.classList.add("show");clearTimeout(tt);tt=setTimeout(()=>t.classList.remove("show"),2200)}
+function confetti(){
+  if(matchMedia("(prefers-reduced-motion: reduce)").matches)return;
+  const c=$("#confetti"),x=c.getContext("2d");c.width=innerWidth;c.height=innerHeight;
+  const cs=getComputedStyle(document.documentElement);const cols=[cs.getPropertyValue("--hl"),cs.getPropertyValue("--teal"),cs.getPropertyValue("--ok"),"#ffffff"];
+  const P=Array.from({length:120},()=>({x:Math.random()*c.width,y:-20-Math.random()*c.height*.5,r:4+Math.random()*5,vy:2+Math.random()*3,vx:-1+Math.random()*2,c:cols[Math.floor(Math.random()*4)]}));
+  let f=0;(function loop(){x.clearRect(0,0,c.width,c.height);P.forEach(p=>{p.y+=p.vy;p.x+=p.vx;x.fillStyle=p.c;x.beginPath();x.arc(p.x,p.y,p.r,0,7);x.fill()});if(++f<160)requestAnimationFrame(loop);else x.clearRect(0,0,c.width,c.height)})();
+}
+
+/* ---------- routing ---------- */
+/* ---------- cloud: login, sync, leaderboard, admin ---------- */
+const C={user:null,db:null,uid:null,me:null,owner:false,canWrite:null,writeOk:true,docs:{},names:{},pending:false,busy:false,timer:null,loaded:false};
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const avatar=(p,fallback)=>{const n=(p&&p.name)||fallback||"؟";return p&&p.avatarUrl?`<span class="av"><img src="${esc(p.avatarUrl)}" alt=""></span>`:`<span class="av" style="background:${esc((p&&p.color)||"var(--teal)")}">${esc(n.trim().charAt(0)||"؟")}</span>`};
+let entered=false;try{entered=localStorage.getItem("qdr_entered")==="1"}catch(e){}
+
+async function initCloud(){
+  if(!window.claude||!window.claude.use){renderLogin();return}
+  try{C.user=await window.claude.use("user")}catch(e){C.user=null}
+  if(C.user){
+    try{C.me=await C.user.me()}catch(e){}
+    try{C.uid=await C.user.id()}catch(e){}
+    try{C.owner=await C.user.isOwner()}catch(e){}
+    try{C.canWrite=await C.user.can("data.write")}catch(e){C.canWrite=null}
+  }
+  $("#adminTab").hidden=!C.owner;
+  try{C.db=await window.claude.use("db")}catch(e){C.db=null}
+  renderLogin();
+  if(C.db&&C.uid){
+    try{const snap=await C.db.doc("progress/"+C.uid).get();
+      if(snap.exists){const d=snap.data();if((d.total||0)>S.total){S=Object.assign(S,JSON.parse(JSON.stringify(d)));if(!Array.isArray(S.wrong))S.wrong=[];if(S.day!==today()){S.day=today();S.todayN=0}try{localStorage.setItem("qdr_state",JSON.stringify(S))}catch(e){}renderStats()}
+        else if(S.total>(d.total||0))queueCloud()}
+      else if(S.total>0)queueCloud();
+    }catch(e){}
+    C.loaded=true;subscribeBoard();
+  }
+  renderProgress();
+  if(location.hash==="#admin")show("admin");
+}
+function canSync(){return C.db&&C.uid&&C.writeOk&&C.canWrite!==false}
+function queueCloud(){if(!canSync())return;clearTimeout(C.timer);C.timer=setTimeout(flushCloud,1500)}
+async function flushCloud(){
+  if(!canSync())return;if(C.busy){C.pending=true;return}
+  C.busy=true;
+  try{await C.db.doc("progress/"+C.uid).set({xp:S.xp,total:S.total,correct:S.correct,streak:S.streak,last:S.last,day:S.day,todayN:S.todayN,topic:S.topic,wrong:S.wrong,updated:new Date().toISOString()})}
+  catch(e){if(e&&e.code==="invalid_argument"){C.writeOk=false;renderProgress()}}
+  C.busy=false;if(C.pending){C.pending=false;flushCloud()}
+}
+let boardUnsub=null,boardTimer=null;
+function subscribeBoard(){
+  if(!C.db||boardUnsub)return;
+  boardTimer=setTimeout(()=>{if(!Object.keys(C.docs).length)$("#board").innerHTML=`<div class="empty">ما قدرنا نوصل للبيانات للحين، جرّب بعد شوي.</div>`},10000);
+  boardUnsub=C.db.collection("progress").onSnapshot(async snap=>{
+    if(!snap.metadata.fromCache)clearTimeout(boardTimer);
+    C.docs={};snap.docs.forEach(d=>{if(d.exists)C.docs[d.id]=d.data()});
+    const ids=Object.keys(C.docs);
+    if(C.user&&ids.length){try{C.names=await C.user.profiles(ids)}catch(e){}}
+    renderBoard();if(C.owner)renderAdmin();
+  },()=>{clearTimeout(boardTimer);$("#board").innerHTML=`<div class="empty">لوحة المتصدرين مو متاحة لك حالياً.</div>`});
+}
+
+function renderLogin(){
+  const box=$("#loginBox");
+  if(C.user&&C.me&&C.uid){
+    const nm=C.me.name||"صديقنا";
+    box.innerHTML=`<div class="who">${avatar(C.me,nm)}<div style="min-width:0"><b>${esc(nm)}</b><div class="note">${C.owner?"أنت صاحب الموقع (أدمن)":"مسجّل دخول"}</div></div></div>
+      <button class="btn hlb wide" id="enterBtn" style="margin-top:12px">ادخل وابدأ</button>`;
+  }else{
+    box.innerHTML=`<div class="who"><span class="av">؟</span><div><b>ما سجّلت دخول</b><div class="note">سجّل دخولك في Claude من أعلى الصفحة، وبعدها ارجع هنا</div></div></div>
+      <button class="btn ghost wide" id="enterBtn" style="margin-top:12px">كمّل كضيف (التقدم يتحفظ في جهازك بس)</button>`;
+  }
+  $("#enterBtn").addEventListener("click",()=>{entered=true;try{localStorage.setItem("qdr_entered","1")}catch(e){}document.body.classList.remove("gate");go("home")});
+}
+
+function topicName(id){const t=allTopics().find(x=>x.id===id);return t?t.t:id}
+function level(st){if(!st||!st.n)return["none","ما بدأت"];const a=st.c/st.n;if(st.n<3)return["none","بيانات قليلة"];if(a<.6)return["bad","ضعيف"];if(a<.8)return["mid","متوسط"];return["ok","ممتاز"]}
+function weakTopics(topic){return allTopics().map(t=>({t,st:(topic||{})[t.id]})).filter(x=>x.st&&x.st.n>=3&&x.st.c/x.st.n<.6).sort((a,b)=>a.st.c/a.st.n-b.st.c/b.st.n)}
+function topicRows(sec){
+  return TOPICS[sec].map(t=>{const st=S.topic[t.id]||{c:0,n:0};const a=st.n?Math.round(st.c/st.n*100):0;const [k,l]=level(st);
+    const col=k==="bad"?"var(--bad)":k==="mid"?"var(--hl)":k==="ok"?"var(--ok)":"var(--line)";
+    return `<div class="trow"><span>${t.t}</span><span><span class="pill ${k}">${l}</span> <span class="m">${st.n?a+"%":""}</span></span><span class="bar2"><i style="width:${st.n?a:0}%;background:${col}"></i></span></div>`}).join("");
+}
+function renderProgress(){
+  const acc=S.total?Math.round(S.correct/S.total*100)+"%":"–";
+  $("#pgKpis").innerHTML=[[S.xp,"نقاطك"],[S.total,"أسئلة محلولة"],[acc,"نسبة الصح"],[S.streak,"أيام متتالية"]].map(([v,k])=>`<div class="kpi"><div class="v">${v}</div><div class="k">${k}</div></div>`).join("");
+  $("#pgQuant").innerHTML=topicRows("quant");$("#pgVerbal").innerHTML=topicRows("verbal");
+  const w=weakTopics(S.topic);
+  const untouched=allTopics().filter(t=>!(S.topic[t.id]&&S.topic[t.id].n));
+  let html=w.map(x=>`<div class="weak"><div><b>${x.t.t}</b><small>صح ${x.st.c} من ${x.st.n} · ${m(Math.round(x.st.c/x.st.n*100)+"%")}</small></div><button class="btn sm" data-train="${x.t.id}" data-s="${x.t.s}">تدرّب</button></div>`).join("");
+  if(!w.length)html=S.total?`<div class="empty">ما عندك نقطة ضعف واضحة للحين، كفو! حل أكثر عشان تتأكد.</div>`:`<div class="empty">حل كم سؤال وبتطلع لك هنا المواضيع اللي تحتاج تركز عليها.</div>`;
+  if(untouched.length&&S.total)html+=`<div class="note">مواضيع ما جربتها: ${untouched.slice(0,6).map(t=>t.t).join("، ")}</div>`;
+  $("#weakList").innerHTML=html;
+  const rw=$("#reviewWrong");rw.hidden=!S.wrong.length;rw.textContent=`راجع أخطائي (${S.wrong.length})`;
+  let note="";
+  if(!C.uid)note=`<div class="banner">أنت داخل كضيف، تقدمك محفوظ في هذا الجهاز بس. سجّل دخولك عشان يتحفظ ويطلع اسمك في المتصدرين.</div>`;
+  else if(!canSync())note=`<div class="banner">حسابك عنده صلاحية مشاهدة فقط، فتقدمك محفوظ في جهازك. اطلب من صاحب الموقع يعطيك صلاحية أعلى عشان يتحفظ تقدمك ويطلع اسمك في المتصدرين.</div>`;
+  $("#syncNote").innerHTML=note;
+}
+$("#weakList").addEventListener("click",e=>{const b=e.target.closest("[data-train]");if(b)startQuick(b.dataset.s,b.dataset.train)});
+$("#reviewWrong").addEventListener("click",()=>{const list=Q.filter(q=>S.wrong.includes(q.id));if(!list.length)return;go("practice");const k=pCount;pCount=list.length;startRound(list);pCount=k});
+
+function renderBoard(){
+  const rows=Object.entries(C.docs).sort((a,b)=>(b[1].xp||0)-(a[1].xp||0)).slice(0,15);
+  if(!rows.length){$("#board").innerHTML=`<div class="empty">ما فيه أحد للحين. كن أول واحد!</div>`;return}
+  $("#board").innerHTML=rows.map(([id,d],i)=>{const p=C.names[id];const nm=(p&&p.name)||"طالب";
+    return `<div class="lbr ${id===C.uid?"me":""}"><span class="pos">${i+1}</span>${avatar(p,nm)}<span class="nm">${esc(nm)}${id===C.uid?" (أنت)":""}</span><b class="m">${d.xp||0}</b></div>`}).join("");
+}
+function ago(iso){if(!iso)return"–";const m=Math.round((Date.now()-new Date(iso))/6e4);if(m<1)return"الحين";if(m<60)return`قبل ${m} د`;const h=Math.round(m/60);if(h<24)return`قبل ${h} س`;return`قبل ${Math.round(h/24)} يوم`}
+let openRow=null;
+function renderAdmin(){
+  const rows=Object.entries(C.docs).sort((a,b)=>(b[1].xp||0)-(a[1].xp||0));
+  const n=rows.length,tot=rows.reduce((s,[,d])=>s+(d.total||0),0),cor=rows.reduce((s,[,d])=>s+(d.correct||0),0);
+  const active=rows.filter(([,d])=>d.updated&&Date.now()-new Date(d.updated)<7*864e5).length;
+  $("#adKpis").innerHTML=[[n,"عدد الطلاب"],[active,"نشطين هالأسبوع"],[tot,"أسئلة محلولة"],[tot?Math.round(cor/tot*100)+"%":"–","متوسط نسبة الصح"]].map(([v,k])=>`<div class="kpi"><div class="v">${v}</div><div class="k">${k}</div></div>`).join("");
+  const agg={};rows.forEach(([,d])=>Object.entries(d.topic||{}).forEach(([t,st])=>{agg[t]=agg[t]||{c:0,n:0};agg[t].c+=st.c||0;agg[t].n+=st.n||0}));
+  const at=Object.entries(agg).filter(([,s])=>s.n>0).sort((a,b)=>a[1].c/a[1].n-b[1].c/b[1].n).slice(0,6);
+  $("#adTopics").innerHTML=at.length?at.map(([t,s])=>{const a=Math.round(s.c/s.n*100);const [k]=level(s);return `<div class="trow"><span>${topicName(t)}</span><span class="m">${a}%</span><span class="bar2"><i style="width:${a}%;background:${k==="bad"?"var(--bad)":k==="mid"?"var(--hl)":"var(--ok)"}"></i></span></div>`}).join(""):`<div class="empty">للحين ما فيه بيانات كافية.</div>`;
+  if(!n){$("#adRows").innerHTML=`<tr><td colspan="6" class="empty">ما فيه طلاب للحين. أرسل الرابط لأخوياك وبيطلعون هنا أول ما يحلون.</td></tr>`;return}
+  $("#adRows").innerHTML=rows.map(([id,d])=>{const p=C.names[id];const nm=(p&&p.name)||"طالب";const acc=d.total?Math.round(d.correct/d.total*100):null;
+    const w=weakTopics(d.topic)[0];
+    const main=`<tr class="st" data-id="${esc(id)}"><td><span style="display:flex;align-items:center;gap:8px">${avatar(p,nm)}<span>${esc(nm)}${id===C.uid?" (أنت)":""}</span></span></td><td class="num">${d.xp||0}</td><td class="num">${d.total||0}</td><td class="num">${acc===null?"–":acc+"%"}</td><td>${w?`<span class="pill bad">${w.t.t}</span>`:`<span class="pill none">لا يوجد</span>`}</td><td>${ago(d.updated)}</td></tr>`;
+    if(openRow!==id)return main;
+    const det=allTopics().map(t=>{const st=(d.topic||{})[t.id];const a=st&&st.n?Math.round(st.c/st.n*100):0;const [k,l]=level(st);return `<div class="trow"><span>${t.t}</span><span><span class="pill ${k}">${l}</span> <span class="m">${st&&st.n?a+"% ("+st.n+")":""}</span></span></div>`}).join("");
+    return main+`<tr class="detail"><td colspan="6"><div class="dgrid">${det}</div><div class="note" style="margin-top:8px">أيام متتالية: ${d.streak||0} · أسئلة غلط ما راجعها: ${(d.wrong||[]).length}</div></td></tr>`}).join("");
+}
+$("#adRows").addEventListener("click",e=>{const r=e.target.closest("tr.st");if(!r)return;openRow=openRow===r.dataset.id?null:r.dataset.id;renderAdmin()});
+
+/* ---------- routing ---------- */
+const VIEWS=["login","home","learn","practice","progress","admin"];
+function go(v){if(location.hash!=="#"+v)history.replaceState(null,"","#"+v);show(v)}
+function show(v){if(!VIEWS.includes(v))v="home";
+  if(v==="admin"&&!C.owner)v="home";
+  if(!entered&&v!=="login"){v="login"}
+  document.body.classList.toggle("gate",v==="login");
+  VIEWS.forEach(k=>$("#v-"+k).hidden=k!==v);
+  document.querySelectorAll("nav.tabs button").forEach(b=>b.setAttribute("aria-current",b.dataset.go===v));
+  if(v==="home")renderStats();if(v==="progress")renderProgress();if(v==="admin")renderAdmin();window.scrollTo(0,0)}
+document.addEventListener("click",e=>{const b=e.target.closest("[data-go]");if(b){go(b.dataset.go)}});
+$("#homeBtn").addEventListener("click",()=>go("home"));
+addEventListener("hashchange",()=>show(location.hash.slice(1)));
+
+$("#quote").textContent="«"+QUOTES[new Date().getDate()%QUOTES.length]+"»";
+renderLearn();fillTopics();renderStats();renderLogin();show(location.hash.slice(1)||"home");
+initCloud();
+</script>
+</body>
+</html>
